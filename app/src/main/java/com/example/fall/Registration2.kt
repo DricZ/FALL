@@ -1,23 +1,33 @@
 package com.example.fall
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
+import android.widget.*
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Registration2 : AppCompatActivity() {
+    lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration2)
+
+        // DB INIT
+        db = FirebaseFirestore.getInstance()
+
         val imgShuffle = findViewById<ImageView>(R.id.imageView3)
         val imgShuffleSex = findViewById<ImageView>(R.id.imageView4)
         val regNickname = findViewById<EditText>(R.id.regNickname)
         val regSex = findViewById<TextView>(R.id.regSex)
-        val regAge2 = findViewById<EditText>(R.id.regAge2)
         val buttonRegister = findViewById<Button>(R.id.buttonRegist)
+
+//      INIT AGE DI REG 2
+        val getUser = intent.getStringExtra("user")
+        val getPass = intent.getStringExtra("pass")
+        val getAge = intent.getStringExtra("age")
 
         imgShuffle.setOnClickListener {
             randomNickName()
@@ -36,10 +46,20 @@ class Registration2 : AppCompatActivity() {
                     break
                 }
             }
-
-
         }
 
+        buttonRegister.setOnClickListener {
+            TambahData(regNickname.text.toString(), getUser.toString(), getPass.toString(), getAge.toString().toInt(), regSex.text.toString())
+
+            Toast.makeText(
+                this@Registration2,
+                "Register Success!",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            val eIntent = Intent(this@Registration2, Login::class.java)
+            startActivity(eIntent)
+        }
     }
 
     fun randomNickName(): String {
@@ -54,5 +74,23 @@ class Registration2 : AppCompatActivity() {
         val sex = listOf("Male", "Female")
         val randomElement = sex.asSequence().shuffled().find { true }
         return randomElement.toString()
+    }
+
+    private fun TambahData(nickname: String, username: String, password: String, age: Int, sex: String) {
+        val user = hashMapOf(
+            "nickname" to nickname,
+            "username" to username,
+            "password" to password,
+            "age" to age,
+            "sex" to sex
+        )
+
+        db.collection("account").add(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d("CEK REGISTER", "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("CEK REGISTER", "Error adding document", e)
+            }
     }
 }

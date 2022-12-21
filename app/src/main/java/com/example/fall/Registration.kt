@@ -29,6 +29,9 @@ class Registration : AppCompatActivity() {
 
                 if (regUser.text.toString() != "" || regPass.text.toString() != "") {
                     val regist2Intent = Intent(this@Registration, Registration2::class.java)
+                    regist2Intent.putExtra("age", regAge.text.toString())
+                    regist2Intent.putExtra("user", regUser.text.toString())
+                    regist2Intent.putExtra("pass", regPass.text.toString())
                     startActivity(regist2Intent)
                 } else {
                     Log.d("FAILED", "gagal next")
