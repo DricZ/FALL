@@ -1,5 +1,6 @@
 package com.example.fall
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
 class Registration : AppCompatActivity() {
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -23,6 +25,8 @@ class Registration : AppCompatActivity() {
         val etUsr = findViewById<EditText>(R.id.editTextUsr)
         val etPass = findViewById<EditText>(R.id.editTextTextPassword)
         val etAge = findViewById<EditText>(R.id.editTextNumberSigned2)
+
+
 //        CoroutineScope(Dispatchers.Main).async {
             btnNextRegist.setOnClickListener{
 
