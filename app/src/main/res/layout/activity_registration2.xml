@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
-            android:id="@+id/editTextNn"
+            android:id="@+id/regNickname"
             android:layout_width="199dp"
             android:layout_height="47dp"
             android:layout_marginStart="104dp"
@@ -67,8 +67,8 @@
             android:layout_height="37dp"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextNn"
-            app:layout_constraintStart_toEndOf="@+id/editTextNn"
+            app:layout_constraintBottom_toBottomOf="@+id/regNickname"
+            app:layout_constraintStart_toEndOf="@+id/regNickname"
             app:srcCompat="@drawable/ic_baseline_loop_24" />
 
         <ImageView
@@ -79,7 +79,7 @@
             android:layout_marginEnd="52dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toEndOf="@+id/textViewSex2"
+            app:layout_constraintStart_toEndOf="@+id/regSex"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:srcCompat="@drawable/ic_baseline_loop_24" />
 
@@ -94,10 +94,10 @@
             android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNn" />
+            app:layout_constraintTop_toBottomOf="@+id/regNickname" />
 
         <TextView
-            android:id="@+id/textViewSex2"
+            android:id="@+id/regSex"
             android:layout_width="170dp"
             android:layout_height="37dp"
             android:layout_marginTop="8dp"
@@ -116,11 +116,11 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="@+id/textViewSex2"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSex2" />
+            app:layout_constraintStart_toStartOf="@+id/regSex"
+            app:layout_constraintTop_toBottomOf="@+id/regSex" />
 
         <EditText
-            android:id="@+id/editTextNumberSigned2"
+            android:id="@+id/regAge2"
             android:layout_width="223dp"
             android:layout_height="42dp"
             android:layout_marginTop="16dp"
@@ -145,7 +145,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumberSigned2" />
+            app:layout_constraintTop_toBottomOf="@+id/regAge2" />
 
         <!--        <TextView-->
         <!--            android:id="@+id/txtSignUp"-->

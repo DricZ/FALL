@@ -1,9 +1,8 @@
 package com.example.fall
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,23 +14,25 @@ class Registration2 : AppCompatActivity() {
         setContentView(R.layout.activity_registration2)
         val imgShuffle = findViewById<ImageView>(R.id.imageView3)
         val imgShuffleSex = findViewById<ImageView>(R.id.imageView4)
-        var etNn = findViewById<EditText>(R.id.editTextNn)
-        var tvSex = findViewById<TextView>(R.id.textViewSex2)
+        val regNickname = findViewById<EditText>(R.id.regNickname)
+        val regSex = findViewById<TextView>(R.id.regSex)
+        val regAge2 = findViewById<EditText>(R.id.regAge2)
+        val buttonRegister = findViewById<Button>(R.id.buttonRegist)
 
         imgShuffle.setOnClickListener {
             randomNickName()
-            etNn.setText("")
-            etNn.setText(randomNickName())
+            regNickname.setText("")
+            regNickname.setText(randomNickName())
         }
         imgShuffleSex.setOnClickListener {
             while (true){
                 var hasilRandomSex = randomSex()
-                if (hasilRandomSex == tvSex.text.toString()){
+                if (hasilRandomSex == regSex.text.toString()){
                     hasilRandomSex = randomSex()
                     continue
                 }else{
-                    tvSex.setText("")
-                    tvSex.setText(hasilRandomSex)
+                    regSex.setText("")
+                    regSex.setText(hasilRandomSex)
                     break
                 }
             }

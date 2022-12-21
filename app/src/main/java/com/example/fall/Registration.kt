@@ -10,9 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 
 class Registration : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
@@ -21,16 +18,16 @@ class Registration : AppCompatActivity() {
         setContentView(R.layout.activity_registration)
 
         val btnNextRegist = findViewById<Button>(R.id.buttonNextRegist)
-//        val etUsr = findViewById<EditText>(R.id.editTextUsr)
-        val etUsr = findViewById<EditText>(R.id.editTextUsr)
-        val etPass = findViewById<EditText>(R.id.editTextTextPassword)
-        val etAge = findViewById<EditText>(R.id.editTextNumberSigned2)
+//        val regUser = findViewById<EditText>(R.id.editTextUsr)
+        val regUser = findViewById<EditText>(R.id.regUser)
+        val regPass = findViewById<EditText>(R.id.regPass)
+        val regAge = findViewById<EditText>(R.id.regAge)
 
 
 //        CoroutineScope(Dispatchers.Main).async {
             btnNextRegist.setOnClickListener{
 
-                if (etUsr.text.toString() != "" || etPass.text.toString() != "") {
+                if (regUser.text.toString() != "" || regPass.text.toString() != "") {
                     val regist2Intent = Intent(this@Registration, Registration2::class.java)
                     startActivity(regist2Intent)
                 } else {

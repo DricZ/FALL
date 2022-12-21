@@ -38,7 +38,7 @@
 
 
         <EditText
-            android:id="@+id/editTextUsr"
+            android:id="@+id/regUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -60,10 +60,10 @@
             android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="@+id/textViewUsr"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUsr" />
+            app:layout_constraintTop_toBottomOf="@+id/regUser" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/regPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -85,15 +85,16 @@
             android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="@+id/textViewPass"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/regPass" />
 
         <EditText
-            android:id="@+id/editTextNumberSigned2"
+            android:id="@+id/regAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="numberSigned"
+            android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="@+id/textViewAge"
             app:layout_constraintTop_toBottomOf="@+id/textViewAge" />
 
@@ -110,7 +111,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumberSigned2" />
+            app:layout_constraintTop_toBottomOf="@+id/regAge" />
 
         <!--        <TextView-->
 <!--            android:id="@+id/txtSignUp"-->
