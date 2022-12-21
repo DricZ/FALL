@@ -107,36 +107,11 @@
             app:layout_constraintStart_toStartOf="@+id/textViewSex"
             app:layout_constraintTop_toBottomOf="@+id/textViewSex" />
 
-        <TextView
-            android:id="@+id/textViewAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Age"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="@+id/regSex"
-            app:layout_constraintTop_toBottomOf="@+id/regSex" />
-
-        <EditText
-            android:id="@+id/regAge2"
-            android:layout_width="223dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="numberSigned"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="@+id/textViewAge"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAge" />
-
         <Button
             android:id="@+id/buttonRegist"
             android:layout_width="163dp"
             android:layout_height="52dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="248dp"
             android:backgroundTint="@color/button"
             android:text="Regist"
             android:textColor="@color/white"
@@ -145,7 +120,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/regAge2" />
+            app:layout_constraintTop_toBottomOf="@+id/regSex" />
 
         <!--        <TextView-->
         <!--            android:id="@+id/txtSignUp"-->
