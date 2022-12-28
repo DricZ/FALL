@@ -13,6 +13,35 @@
         android:theme="@style/Theme.FALL"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivityFragment"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".NewThread"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".tesHome"
+            android:exported="false"
+            android:label="@string/title_activity_tes_home">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Home"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Registration2"
             android:exported="false">
             <meta-data
