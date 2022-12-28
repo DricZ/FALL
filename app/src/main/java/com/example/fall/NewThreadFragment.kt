@@ -64,7 +64,8 @@ class NewThreadFragment : Fragment() {
                 )
             )
             val mBundle = Bundle()
-            mBundle.putParcelableArray("DATA", listThread.toTypedArray())
+//            mBundle.putParcelableArray("DATA", listThread)
+            mBundle.putParcelableArrayList("DATA",listThread)
 
             val mfThread = ThreadFragment()
             mfThread.arguments = mBundle

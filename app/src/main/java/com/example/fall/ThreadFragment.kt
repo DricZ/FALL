@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,7 +20,6 @@ class ThreadFragment : Fragment() {
         }
     }
 
-    lateinit var dataIntent : ArrayList<thread>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,14 +34,16 @@ class ThreadFragment : Fragment() {
             }
         }
 
+        var dataBundle = ArrayList<thread>()
         if (arguments != null){
-            val dataBundle = arguments?.getParcelableArray("DATA")
+            dataBundle = arguments?.getParcelableArrayList<thread>("DATA")!!
             Log.d("DATA_BUNDLE", dataBundle.toString())
-            val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
-            rvThread.layoutManager = LinearLayoutManager(view.context)
-//            val adapterRV = adapterthread(dataBundle)
-//            rvThread.adapter = adapterRV
+
         }
+        val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
+        rvThread.layoutManager = LinearLayoutManager(view.context)
+        val adapterRV = adapterthread(dataBundle)
+        rvThread.adapter = adapterRV
     }
 
     override fun onCreateView(
