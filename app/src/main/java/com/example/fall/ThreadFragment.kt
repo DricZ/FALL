@@ -36,7 +36,7 @@ class ThreadFragment : Fragment() {
 
         var dataBundle = ArrayList<thread>()
         if (arguments != null){
-            dataBundle = arguments?.getParcelableArrayList<thread>("DATA")!!
+            dataBundle = arguments?.getParcelableArrayList<thread>("DATA") as ArrayList<thread>
             Log.d("DATA_BUNDLE", dataBundle.toString())
 
         }

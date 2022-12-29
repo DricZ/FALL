@@ -26,7 +26,7 @@ class NewThreadFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_thread, container, false)
     }
-
+    var listThread : ArrayList<thread> = arrayListOf<thread>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        val img = view.findViewById<ImageView>(R.id.imageView11)
@@ -54,15 +54,12 @@ class NewThreadFragment : Fragment() {
         }
 
         val btnPost = view.findViewById<Button>(R.id.buttonPostThread)
-        val etTilte = view.findViewById<EditText>(R.id.titleNewThread).text.toString()
-        val etIsi = view.findViewById<EditText>(R.id.isiNewThread).text.toString()
-        val listThread : ArrayList<thread> = arrayListOf()
+        val etTilte = view.findViewById<EditText>(R.id.titleNewThread)
+        val etIsi = view.findViewById<EditText>(R.id.isiNewThread)
+        
         btnPost.setOnClickListener{
-            listThread.add(
-                thread(
-                    etTilte, etIsi, 0, 0
-                )
-            )
+            val newThread = thread(etTilte.text.toString(), etIsi.text.toString(), 0, 0)
+            listThread.add(newThread)
             val mBundle = Bundle()
 //            mBundle.putParcelableArray("DATA", listThread)
             mBundle.putParcelableArrayList("DATA",listThread)
