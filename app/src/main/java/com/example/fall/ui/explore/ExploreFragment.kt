@@ -1,15 +1,14 @@
-package com.example.fall.ui.dashboard
+package com.example.fall.ui.explore
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.fall.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class ExploreFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -22,8 +21,8 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        val exploreViewModel =
+            ViewModelProvider(this).get(ExploreViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
