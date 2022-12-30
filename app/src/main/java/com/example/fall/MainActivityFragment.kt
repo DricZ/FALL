@@ -24,16 +24,14 @@ class MainActivityFragment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main_fragment)
 
+        val mfHome = NewThreadFragment()
 
-        val mfHome = ThreadFragment()
-
-        mFragmentManager.findFragmentByTag(ThreadFragment::class.java.simpleName)
+        mFragmentManager.findFragmentByTag(NewThreadFragment::class.java.simpleName)
         mFragmentManager
             .beginTransaction()
-            .add(R.id.frameContainer, mfHome, ThreadFragment::class.java.simpleName)
+            .add(R.id.frameContainer, mfHome, NewThreadFragment::class.java.simpleName)
             .commit()
     }
 }

@@ -59,7 +59,7 @@ class Login : AppCompatActivity() {
                     ).show()
 
                     // PERLU DIGANTI!!
-                    val eIntent = Intent(this@Login, MainActivityFragment::class.java)
+                    val eIntent = Intent(this@Login, tesHome::class.java)
                     startActivity(eIntent)
                 }
             }

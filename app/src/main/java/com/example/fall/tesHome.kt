@@ -29,6 +29,8 @@ class tesHome : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+//        var dataIntent = intent.getParcelableArrayListExtra<thread>("DATA") as ArrayList<thread>
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

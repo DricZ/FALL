@@ -1,13 +1,18 @@
 package com.example.fall.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.fall.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.fall.*
 import com.example.fall.databinding.FragmentHomeBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
     private lateinit var _judul: Array<String>
@@ -43,8 +48,23 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val btnAddThread = view.findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        btnAddThread.setOnClickListener {
+            val intent = Intent(view.context, MainActivityFragment::class.java)
+            startActivity(intent)
+        }
 
-        val btnAddThread = view.findViewById<TextView>(R.id.floatingActionButton)
+        // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
+//        var dataBundle = ArrayList<thread>()
+//        if (arguments != null){
+//            dataBundle = arguments?.getParcelableArrayList<thread>("DATA") as ArrayList<thread>
+//            Log.d("DATA_BUNDLE", dataBundle.toString())
+//
+//        }
+//        val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
+//        rvThread.layoutManager = LinearLayoutManager(view.context)
+//        val adapterRV = adapterthread(dataBundle)
+//        rvThread.adapter = adapterRV
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.fall
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -56,23 +57,27 @@ class NewThreadFragment : Fragment() {
         val btnPost = view.findViewById<Button>(R.id.buttonPostThread)
         val etTilte = view.findViewById<EditText>(R.id.titleNewThread)
         val etIsi = view.findViewById<EditText>(R.id.isiNewThread)
-        
+
         btnPost.setOnClickListener{
             val newThread = thread(etTilte.text.toString(), etIsi.text.toString(), 0, 0)
             listThread.add(newThread)
-            val mBundle = Bundle()
+//            val mBundle = Bundle()
 //            mBundle.putParcelableArray("DATA", listThread)
-            mBundle.putParcelableArrayList("DATA",listThread)
-
-            val mfThread = ThreadFragment()
-            mfThread.arguments = mBundle
-
-            val mFragmentManager = parentFragmentManager
-            mFragmentManager.beginTransaction().apply {
-                replace(R.id.frameContainer, mfThread, ThreadFragment::class.java.simpleName)
-                addToBackStack(null)
-                commit()
+//            mBundle.putParcelableArrayList("DATA",listThread)
+//
+//            val mfThread = ThreadFragment()
+//            mfThread.arguments = mBundle
+//
+//            val mFragmentManager = parentFragmentManager
+//            mFragmentManager.beginTransaction().apply {
+//                add(R.id.frameContainer, mfThread, ThreadFragment::class.java.simpleName)
+//                addToBackStack(null)
+//                commit()
+//            }
+            val eIntent = Intent(view.context, tesHome::class.java).apply {
+                putExtra("DATA", listThread)
             }
+            startActivity(eIntent)
         }
 
 
