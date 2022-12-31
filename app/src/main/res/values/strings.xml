@@ -13,4 +13,6 @@
         <item>Programming</item>
         <item>Live</item>
     </string-array>
+
+    <string name="changePass"><u>Change Password</u></string>
 </resources>
