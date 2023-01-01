@@ -1,5 +1,6 @@
 package com.example.fall
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,8 @@ class Login : AppCompatActivity() {
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
 
         db = FirebaseFirestore.getInstance()
+        val sharedPreferences = getSharedPreferences("SessionUser", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
         var dbAccount = db.collection("account")
 
@@ -57,6 +60,9 @@ class Login : AppCompatActivity() {
                         "Login Success!",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    editor.putString("name", _loginUsr.text.toString())
+                    editor.apply()
 
                     // PERLU DIGANTI!!
                     val eIntent = Intent(this@Login, tesHome::class.java)

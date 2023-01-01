@@ -12,7 +12,7 @@ import org.checkerframework.common.subtyping.qual.Bottom
 
 class MainActivityFragment : AppCompatActivity() {
     val fragmentThread : Fragment = ThreadFragment()
-    val  fragmentExplore : Fragment = ExploreFragment()
+    val fragmentExplore : Fragment = ExploreFragment()
     val mFragmentManager : FragmentManager = supportFragmentManager
     val activeException : Fragment = fragmentThread
 

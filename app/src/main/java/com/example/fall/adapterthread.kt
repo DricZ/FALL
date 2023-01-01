@@ -29,7 +29,7 @@ class adapterthread(
         var thread = listThread!!.get(position)
 
         holder._judulThread.setText(thread.judul)
-        holder._isiThread.setText(thread.isiThread)
+        holder._isiThread.setText(thread.isi)
 
 //        Log.d("JUDUL", thread.judul?)
     }
