@@ -43,22 +43,25 @@
             android:text="Nickname"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold|italic"
+            android:fontFamily="@font/lato_semibolditalic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
             android:id="@+id/regNickname"
-            android:layout_width="199dp"
+            android:layout_width="wrap_content"
             android:layout_height="47dp"
-            android:layout_marginStart="104dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="20dp"
             android:ems="10"
+            android:fontFamily="@font/lato_semibold"
             android:inputType="text"
             android:text="Juragan Geprek"
             android:textColor="@color/text"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textViewUsr"
+            app:layout_constraintHorizontal_bias="0.745"
+            app:layout_constraintStart_toStartOf="@+id/textViewUsr"
             app:layout_constraintTop_toBottomOf="@+id/textViewUsr" />
 
         <ImageView
@@ -75,11 +78,9 @@
             android:id="@+id/imageView4"
             android:layout_width="34dp"
             android:layout_height="37dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="52dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="44dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toEndOf="@+id/regSex"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:srcCompat="@drawable/ic_baseline_loop_24" />
 
@@ -87,12 +88,12 @@
             android:id="@+id/textViewSex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/lato_regular"
             android:text="Sex"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/regNickname" />
 
@@ -104,23 +105,49 @@
             android:text="Male"
             android:textColor="@color/text"
             android:textSize="24sp"
+            android:fontFamily="@font/lato_semibold"
             app:layout_constraintStart_toStartOf="@+id/textViewSex"
             app:layout_constraintTop_toBottomOf="@+id/textViewSex" />
+
+        <TextView
+            android:id="@+id/textViewNoTelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/lato_regular"
+            android:text="Phone"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/regSex" />
+
+        <EditText
+            android:id="@+id/regPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="08123456789"
+            android:textColor="@color/text"
+            android:inputType="number"
+            android:textSize="24sp"
+            android:fontFamily="@font/lato_semibold"
+            app:layout_constraintStart_toStartOf="@+id/textViewNoTelp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNoTelp" />
 
         <Button
             android:id="@+id/buttonRegist"
             android:layout_width="163dp"
             android:layout_height="52dp"
-            android:layout_marginTop="248dp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="@color/button"
             android:text="Regist"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/regSex" />
+            app:layout_constraintTop_toBottomOf="@+id/regPhone" />
 
         <!--        <TextView-->
         <!--            android:id="@+id/txtSignUp"-->

@@ -1,12 +1,27 @@
 package com.example.fall
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.util.Log
 import android.widget.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseException
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Registration2 : AppCompatActivity() {
     lateinit var db: FirebaseFirestore
@@ -20,46 +35,84 @@ class Registration2 : AppCompatActivity() {
 
         val imgShuffle = findViewById<ImageView>(R.id.imageView3)
         val imgShuffleSex = findViewById<ImageView>(R.id.imageView4)
-        val regNickname = findViewById<EditText>(R.id.regNickname)
-        val regSex = findViewById<TextView>(R.id.regSex)
-        val buttonRegister = findViewById<Button>(R.id.buttonRegist)
-
-//      INIT AGE DI REG 2
-        val getUser = intent.getStringExtra("user")
-        val getPass = intent.getStringExtra("pass")
-        val getAge = intent.getStringExtra("age")
+        var etNn = findViewById<EditText>(R.id.regNickname)
+        var tvSex = findViewById<TextView>(R.id.regSex)
+        val etPhone = findViewById<EditText>(R.id.regPhone)
+        val btnRegistn = findViewById<Button>(R.id.buttonRegist)
 
         imgShuffle.setOnClickListener {
             randomNickName()
-            regNickname.setText("")
-            regNickname.setText(randomNickName())
+//            etNn.setText("")
+            etNn.setText(randomNickName())
+
         }
         imgShuffleSex.setOnClickListener {
             while (true){
                 var hasilRandomSex = randomSex()
-                if (hasilRandomSex == regSex.text.toString()){
+                if (hasilRandomSex == tvSex.text.toString()){
                     hasilRandomSex = randomSex()
                     continue
                 }else{
-                    regSex.setText("")
-                    regSex.setText(hasilRandomSex)
+                    tvSex.setText("")
+                    tvSex.setText(hasilRandomSex)
                     break
                 }
             }
         }
 
-        buttonRegister.setOnClickListener {
-            TambahData(regNickname.text.toString(), getUser.toString(), getPass.toString(), getAge.toString().toInt(), regSex.text.toString())
-
-            Toast.makeText(
-                this@Registration2,
-                "Register Success!",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            val eIntent = Intent(this@Registration2, Login::class.java)
-            startActivity(eIntent)
+        //MASUKKAN DATA USER KE FIREBASE
+        btnRegistn.setOnClickListener {
+            val otp = generateOTP()
+            Log.d("OTP", otp)
+            //TAMBAHKAN PENGECEKAN HASIL RUNDOM KALO SUDAH PERNAH MAKA AKAN DI PANGGIL ULANG generateOTP()
+            val MY_PERMISSIONS_REQUEST_SEND_SMS = 123
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+                // Belum mendapat izin
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.SEND_SMS),
+                    MY_PERMISSIONS_REQUEST_SEND_SMS)
+            } else {
+                // Telah mendapat izin
+                // Lakukan proses mengirim SMS di sini
+                val smsManager = SmsManager.getDefault()
+                val phoneNumber = etPhone.text.toString() // ganti dengan nomor telepon Anda
+                val message = "[FALL] Kode OTP anda adalah $otp, mohon untuk tidak memberitahukan kepada siapapun!!!" // ganti dengan kode OTP yang ingin Anda kirim
+                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                startActivity(Intent(this@Registration2, OtpActivity::class.java).apply {
+                    putExtra("OTP", otp)
+                    putExtra("noHp", phoneNumber)
+                })
+            }
         }
+
+        val getOtp = intent.getStringExtra("TRY")
+        Log.d("NEW OTP", getOtp.toString())
+//        if (getOtp == "again"){
+//            val otp = generateOTP()
+//            Log.d("OTP", otp)
+//            //TAMBAHKAN PENGECEKAN HASIL RUNDOM KALO SUDAH PERNAH MAKA AKAN DI PANGGIL ULANG generateOTP()
+//            val MY_PERMISSIONS_REQUEST_SEND_SMS = 123
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+//                != PackageManager.PERMISSION_GRANTED) {
+//                // Belum mendapat izin
+//                ActivityCompat.requestPermissions(this,
+//                    arrayOf(Manifest.permission.SEND_SMS),
+//                    MY_PERMISSIONS_REQUEST_SEND_SMS)
+//            } else {
+//                // Telah mendapat izin
+//                // Lakukan proses mengirim SMS di sini
+//                val smsManager = SmsManager.getDefault()
+//                val phoneNumber = etPhone.text.toString() // ganti dengan nomor telepon Anda
+//                val message = "[FALL] Kode OTP anda adalah $otp, mohon untuk tidak memberitahukan kepada siapapun!!!" // ganti dengan kode OTP yang ingin Anda kirim
+//                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+//                startActivity(Intent(this@Registration2, OtpActivity::class.java).apply {
+//                    putExtra("OTP", otp)
+//                    putExtra("noHp", phoneNumber)
+//                })
+//            }
+//        }
+
     }
 
     fun randomNickName(): String {
@@ -76,21 +129,11 @@ class Registration2 : AppCompatActivity() {
         return randomElement.toString()
     }
 
-    private fun TambahData(nickname: String, username: String, password: String, age: Int, sex: String) {
-        val user = hashMapOf(
-            "nickname" to nickname,
-            "username" to username,
-            "password" to password,
-            "age" to age,
-            "sex" to sex
-        )
 
-        db.collection("account").add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d("CEK REGISTER", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("CEK REGISTER", "Error adding document", e)
-            }
+    fun generateOTP(): String {
+        val random = Random()
+        val num = random.nextInt(900000) + 100000
+        return num.toString()
     }
+
 }
