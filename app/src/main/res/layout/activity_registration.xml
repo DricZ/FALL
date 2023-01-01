@@ -44,6 +44,7 @@
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Input Username"
+            android:fontFamily="@font/lato_semibold"
             android:inputType="textPersonName"
             android:textColor="@color/text"
             android:textSize="24sp"
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:ems="10"
+            android:fontFamily="@font/lato_semibold"
             android:hint="Input Password"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -89,12 +91,14 @@
 
         <EditText
             android:id="@+id/regAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="57dp"
             android:layout_marginTop="16dp"
             android:ems="10"
+            android:fontFamily="@font/lato_semibold"
             android:inputType="numberSigned"
             android:minHeight="48dp"
+            android:textColor="@color/text"
             app:layout_constraintStart_toStartOf="@+id/textViewAge"
             app:layout_constraintTop_toBottomOf="@+id/textViewAge" />
 
@@ -102,16 +106,16 @@
             android:id="@+id/buttonNextRegist"
             android:layout_width="163dp"
             android:layout_height="52dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="72dp"
             android:backgroundTint="@color/button"
             android:text="Next"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/regAge" />
+            app:layout_constraintHorizontal_bias="0.584"
+            app:layout_constraintStart_toEndOf="@+id/regAge"
+            app:layout_constraintTop_toBottomOf="@+id/regPass" />
 
         <!--        <TextView-->
 <!--            android:id="@+id/txtSignUp"-->

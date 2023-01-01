@@ -1,12 +1,27 @@
 package com.example.fall
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Registration2 : AppCompatActivity() {
 
@@ -15,12 +30,14 @@ class Registration2 : AppCompatActivity() {
         setContentView(R.layout.activity_registration2)
         val imgShuffle = findViewById<ImageView>(R.id.imageView3)
         val imgShuffleSex = findViewById<ImageView>(R.id.imageView4)
-        var etNn = findViewById<EditText>(R.id.regAge)
-        var tvSex = findViewById<TextView>(R.id.textViewSex)
+        var etNn = findViewById<EditText>(R.id.regNickname)
+        var tvSex = findViewById<TextView>(R.id.regSex)
+        val etPhone = findViewById<EditText>(R.id.regPhone)
+        val btnRegistn = findViewById<Button>(R.id.buttonRegist)
 
         imgShuffle.setOnClickListener {
             randomNickName()
-            etNn.setText("")
+//            etNn.setText("")
             etNn.setText(randomNickName())
         }
         imgShuffleSex.setOnClickListener {
@@ -35,9 +52,60 @@ class Registration2 : AppCompatActivity() {
                     break
                 }
             }
-
-
         }
+
+        //MASUKKAN DATA USER KE FIREBASE
+        btnRegistn.setOnClickListener {
+            val otp = generateOTP()
+            Log.d("OTP", otp)
+            //TAMBAHKAN PENGECEKAN HASIL RUNDOM KALO SUDAH PERNAH MAKA AKAN DI PANGGIL ULANG generateOTP()
+            val MY_PERMISSIONS_REQUEST_SEND_SMS = 123
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+                // Belum mendapat izin
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.SEND_SMS),
+                    MY_PERMISSIONS_REQUEST_SEND_SMS)
+            } else {
+                // Telah mendapat izin
+                // Lakukan proses mengirim SMS di sini
+                val smsManager = SmsManager.getDefault()
+                val phoneNumber = etPhone.text.toString() // ganti dengan nomor telepon Anda
+                val message = "[FALL] Kode OTP anda adalah $otp, mohon untuk tidak memberitahukan kepada siapapun!!!" // ganti dengan kode OTP yang ingin Anda kirim
+                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                startActivity(Intent(this@Registration2, OtpActivity::class.java).apply {
+                    putExtra("OTP", otp)
+                    putExtra("noHp", phoneNumber)
+                })
+            }
+        }
+
+        val getOtp = intent.getStringExtra("TRY")
+        Log.d("NEW OTP", getOtp.toString())
+//        if (getOtp == "again"){
+//            val otp = generateOTP()
+//            Log.d("OTP", otp)
+//            //TAMBAHKAN PENGECEKAN HASIL RUNDOM KALO SUDAH PERNAH MAKA AKAN DI PANGGIL ULANG generateOTP()
+//            val MY_PERMISSIONS_REQUEST_SEND_SMS = 123
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+//                != PackageManager.PERMISSION_GRANTED) {
+//                // Belum mendapat izin
+//                ActivityCompat.requestPermissions(this,
+//                    arrayOf(Manifest.permission.SEND_SMS),
+//                    MY_PERMISSIONS_REQUEST_SEND_SMS)
+//            } else {
+//                // Telah mendapat izin
+//                // Lakukan proses mengirim SMS di sini
+//                val smsManager = SmsManager.getDefault()
+//                val phoneNumber = etPhone.text.toString() // ganti dengan nomor telepon Anda
+//                val message = "[FALL] Kode OTP anda adalah $otp, mohon untuk tidak memberitahukan kepada siapapun!!!" // ganti dengan kode OTP yang ingin Anda kirim
+//                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+//                startActivity(Intent(this@Registration2, OtpActivity::class.java).apply {
+//                    putExtra("OTP", otp)
+//                    putExtra("noHp", phoneNumber)
+//                })
+//            }
+//        }
 
     }
 
@@ -54,4 +122,12 @@ class Registration2 : AppCompatActivity() {
         val randomElement = sex.asSequence().shuffled().find { true }
         return randomElement.toString()
     }
+
+
+    fun generateOTP(): String {
+        val random = Random()
+        val num = random.nextInt(900000) + 100000
+        return num.toString()
+    }
+
 }
