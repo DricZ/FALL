@@ -2,6 +2,7 @@ package com.example.fall
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -25,6 +26,9 @@ class MainActivityFragment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
+
+        Log.d("KE MAINA FRAG", "KE MAINA FRAG")
+
 
         val mfHome = NewThreadFragment()
 

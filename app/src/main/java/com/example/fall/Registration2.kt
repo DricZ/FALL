@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.util.Log
-import android.widget.*
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,19 +17,17 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.FirebaseException
+//import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.auth.PhoneAuthCredential
+//import com.google.firebase.auth.PhoneAuthProvider
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class Registration2 : AppCompatActivity() {
-    lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration2)
-
-        // DB INIT
-        db = FirebaseFirestore.getInstance()
-
         val imgShuffle = findViewById<ImageView>(R.id.imageView3)
         val imgShuffleSex = findViewById<ImageView>(R.id.imageView4)
         var etNn = findViewById<EditText>(R.id.regNickname)
@@ -44,7 +39,6 @@ class Registration2 : AppCompatActivity() {
             randomNickName()
 //            etNn.setText("")
             etNn.setText(randomNickName())
-
         }
         imgShuffleSex.setOnClickListener {
             while (true){

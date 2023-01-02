@@ -1,6 +1,5 @@
 package com.example.fall
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +21,8 @@ class NewThreadFragment : Fragment() {
 
         }
     }
+
+    var listThread : ArrayList<thread> = arrayListOf<thread>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,8 +97,6 @@ class NewThreadFragment : Fragment() {
         btnPost.setOnClickListener{
             val title = etTilte.text.toString()
             val isi = etIsi.text.toString()
-//            Log.d("titel", title)
-//            Log.d("titel", isi)
 
 
             Log.d("CEK GENRE", genre)
@@ -130,8 +129,17 @@ class NewThreadFragment : Fragment() {
                         Log.d("CEK GENRE", "genre")
 
                         // Jika tidak ada, masukkan dokumen ke Firestore
-                        val thread = thread("1", "1", "Content of thread 1", "Content of thread 1", "Content of thread 1", 1, 0, 0)
-                        listThread.add(thread)
+//                        UNTUK KE LIST THREAD
+//                        val thread1 = thread(thr["id_genre"].toString(),
+//                                thr["id_user"].toString(),
+//                                thr["hirarki"].toString(),
+//                                thr["judul"].toString(),
+//                                thr["isi"].toString(),
+//                                thr["like"] as Int,
+//                                thr["dislike"] as Int,
+//                                currentDate
+//                        )
+//                        listThread.add(thread1)
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -153,8 +161,10 @@ class NewThreadFragment : Fragment() {
 //                commit()
 //            }
             val eIntent = Intent(view.context, tesHome::class.java).apply {
-                putExtra("DATA", listThread)
+//                putExtra("DATA", listThread)
             }
+
+//            Log.d("CEK LIST DATA", listThread.toString())
             startActivity(eIntent)
         }
 
@@ -170,7 +180,7 @@ class NewThreadFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_new_thread, container, false)
     }
 
-    var listThread : ArrayList<thread> = arrayListOf<thread>()
+
 
 
 }

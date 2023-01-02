@@ -2,8 +2,7 @@ package com.example.fall
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.firebase.Timestamp
-import java.util.Date
+import java.util.*
 
 data class thread(
     var id_genre: String?,
@@ -11,9 +10,9 @@ data class thread(
     var hirarki: String?,
     var judul: String?,
     var isi: String?,
-    var like: Int,
-    var dislike: Int,
-    var date: Long
+    var like: Long?,
+    var dislike: Long?,
+    var date: Date
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -21,9 +20,9 @@ data class thread(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readLong()
+        parcel.readLong(),
+        parcel.readLong(),
+        parcel.readSerializable() as Date
     ) {
     }
 
@@ -33,9 +32,9 @@ data class thread(
         parcel.writeString(hirarki)
         parcel.writeString(judul)
         parcel.writeString(isi)
-        parcel.writeInt(like)
-        parcel.writeInt(dislike)
-        parcel.writeLong(date)
+        parcel.writeLong(like!!)
+        parcel.writeLong(dislike!!)
+        parcel.writeSerializable(date)
     }
 
     override fun describeContents(): Int {
@@ -84,22 +83,22 @@ data class thread(
     }
 
     // Setter untuk field timestamp
-    fun setlike(like: Int) {
+    fun setlike(like: Long?) {
         this.like = like
     }
 
     // Getter untuk field timestamp
-    fun getlike(): Int {
+    fun getlike(): Long? {
         return this.like
     }
 
     // Setter untuk field timestamp
-    fun setdislike(dislike: Int) {
+    fun setdislike(dislike: Long?) {
         this.dislike = dislike
     }
 
     // Getter untuk field timestamp
-    fun getdislike(): Int {
+    fun getdislike(): Long? {
         return this.dislike
     }
 
