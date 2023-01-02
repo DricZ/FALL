@@ -32,6 +32,8 @@ class NewThreadFragment : Fragment() {
         val etIsi = view.findViewById<EditText>(R.id.isiNewThread)
 
 
+
+
         val calendar = Calendar.getInstance()
 
         // Mendapatkan waktu sekarang dalam bentuk tanggal
@@ -62,6 +64,7 @@ class NewThreadFragment : Fragment() {
                     val name = documentSnapshot.getString("name")
                     spinnerValues.add(name)
                 }
+                spinnerValues.add("New")
             }
             .addOnFailureListener { exception ->
                 // Handle error
@@ -77,13 +80,23 @@ class NewThreadFragment : Fragment() {
         spinner.setSelection(adapter.getPosition(hint))
 
         val thr = HashMap<String, Any>()
+        val fGen = HashMap<String, Any>()
         var genre = ""
+        val _newGen = view.findViewById<EditText>(R.id.newGen)
 
         // Buat listener untuk menangkap item yang dipilih di spinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 // Ambil value yang dipilih dari spinner
-                genre = parent.getItemAtPosition(position) as String
+                if (parent.getItemAtPosition(position) as String == "New"){
+                    _newGen.visibility = View.VISIBLE
+                    Log.d("CEK SPIN1", "true")
+                }
+                else{
+                    _newGen.visibility = View.GONE
+                    genre = parent.getItemAtPosition(position) as String
+                    Log.d("CEK SPIN2", "true")
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -95,15 +108,56 @@ class NewThreadFragment : Fragment() {
 
 
         btnPost.setOnClickListener{
+            if (etTilte.text.isEmpty()) {
+                Toast.makeText(view.context, "Judul tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (etIsi.text.isEmpty()) {
+                Toast.makeText(view.context, "Isi tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (genre == hint ) {
+                Toast.makeText(view.context, "Silahkan pilih Genre!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val title = etTilte.text.toString()
             val isi = etIsi.text.toString()
+            var cek = true
+
+            if (_newGen.text.toString() != ""){
+                val query = db.collection("genre").whereEqualTo("name".lowercase(), _newGen.text.toString().lowercase())
+                query.get()
+                    .addOnSuccessListener { documents ->
+                        if (documents.isEmpty) {
+                            cek = true
+                            genre = _newGen.text.toString()
+                            fGen["name"] = genre
+                            db.collection("genre").add(fGen)
+                        } else {
+                            cek = false
+                            // Input data ditolak karena sudah ada data dengan nama yang sama
+                            Toast.makeText(
+                                context,
+                                "Input Genre sudah ada!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+
+            if (!cek){
+                return@setOnClickListener
+            }
 
 
             Log.d("CEK GENRE", genre)
             thr["date"] = currentDate
             thr["id_genre"] = genre
             thr["id_user"] = savedName.toString()
-            thr["hirarki"] = 0
+            thr["hirarki"] = ""
             thr["judul"] = title
             thr["isi"] = isi
             thr["like"] = 0
@@ -111,6 +165,7 @@ class NewThreadFragment : Fragment() {
 
             // Tentukan referensi dokumen yang akan digunakan
             val docRef = db.collection("threads").document("thread1")
+
 
             // Mengambil dokumen dari Firestore
             docRef.get()
@@ -120,10 +175,20 @@ class NewThreadFragment : Fragment() {
 
                         db.collection("threads").add(thr)
                             .addOnSuccessListener { documentReference ->
+                                Toast.makeText(
+                                    context,
+                                    "Input Success!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 Log.d("CEK GENRE", "DocumentSnapshot added with ID: ${documentReference.id}")
                             }
                             .addOnFailureListener { e ->
                                 Log.w("CEK GENRE", "Error adding document", e)
+                                Toast.makeText(
+                                    context,
+                                    "Input Tidak Valid!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
                         Log.d("CEK GENRE", "genre")
@@ -166,6 +231,7 @@ class NewThreadFragment : Fragment() {
 
 //            Log.d("CEK LIST DATA", listThread.toString())
             startActivity(eIntent)
+
         }
 
 

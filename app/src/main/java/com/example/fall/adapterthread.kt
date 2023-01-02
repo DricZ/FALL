@@ -17,6 +17,7 @@ class adapterthread(
        var _isiThread : TextView = itemView.findViewById(R.id.textViewItemIsi)
        var _totLike : TextView = itemView.findViewById(R.id.totLike)
        var _totDis : TextView = itemView.findViewById(R.id.totDis)
+       val _dateTh: TextView = itemView.findViewById(R.id.dateTh)
 //               var _totalThumbsUp : ImageView = itemView.findViewById(R.id.imageView9)
 //               var _totalThumbsDown : ImageView = itemView.findViewById(R.id.imageView10)
    }
@@ -36,6 +37,7 @@ class adapterthread(
         holder._isiThread.setText(thread.isi)
         holder._totLike.setText(thread.like.toString())
         holder._totDis.setText(thread.dislike.toString())
+        holder._dateTh.setText(thread.date.toString())
 
 //        Log.d("JUDUL", thread.judul?)
     }
