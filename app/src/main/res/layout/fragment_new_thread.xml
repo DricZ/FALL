@@ -41,22 +41,25 @@
             android:id="@+id/titleNewThread"
             android:layout_width="239dp"
             android:layout_height="50dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Judul"
-            android:textColorHint="@color/white"
             android:fontFamily="@font/lato_bold"
+            android:hint="Judul"
+            android:inputType="text"
             android:textColor="@color/white"
+            android:textColorHint="#9E9898"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="@+id/spinner"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newGen" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="295dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:contentDescription="Silahkan Pilih Genre"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -68,26 +71,43 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/lato_semibold"
             android:hint="Isi Thread"
-            android:textColorHint="@color/white"
             android:textColor="@color/white"
+            android:textColorHint="#9E9898"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/titleNewThread"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleNewThread" />
 
         <Button
             android:id="@+id/buttonPostThread"
             android:layout_width="149dp"
             android:layout_height="58dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="64dp"
             android:backgroundTint="@color/button"
             android:text="POST"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.564"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/isiNewThread" />
+
+        <EditText
+            android:id="@+id/newGen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="New Genre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textColor="@color/white"
+            android:textColorHint="#9E9898"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

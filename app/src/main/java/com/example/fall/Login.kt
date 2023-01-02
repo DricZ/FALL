@@ -1,5 +1,6 @@
 package com.example.fall
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.fall.ui.home.HomeFragment
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Login : AppCompatActivity() {
@@ -26,6 +28,10 @@ class Login : AppCompatActivity() {
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
 
         db = FirebaseFirestore.getInstance()
+        val sharedPreferences = getSharedPreferences("SessionUser", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val threadsRef = db.collection("threads")
+
 
         var dbAccount = db.collection("account")
 
@@ -58,9 +64,63 @@ class Login : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    // PERLU DIGANTI!!
-                    val eIntent = Intent(this@Login, tesHome::class.java)
-                    startActivity(eIntent)
+                    editor.putString("name", _loginUsr.text.toString())
+                    editor.apply()
+// AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
+
+                    var dataBundle = ArrayList<thread>()
+
+
+                    threadsRef.get()
+                        .addOnSuccessListener { querySnapshot ->
+                            // Iterate through the documents in the collection
+                            for (documentSnapshot in querySnapshot) {
+                                // Ambil judul dari setiap document
+                                val idGenre = documentSnapshot.getString("id_genre")
+                                val idUser = documentSnapshot.getString("id_user")
+                                val hirarki = documentSnapshot.getString("hirarki")
+                                val judul = documentSnapshot.getString("judul")
+                                val isi = documentSnapshot.getString("isi")
+                                val like = documentSnapshot.getLong("like")
+                                val dislike = documentSnapshot.getLong("dislike")
+                                val date = documentSnapshot.getTimestamp("date")?.toDate()
+
+                                // Tambahkan data ke dalam list
+                                val newThread =
+                                    date?.let {
+                                        thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
+                                            it
+                                        )
+                                    }
+
+
+
+                                if (newThread != null) {
+                                    dataBundle.add(newThread)
+
+                                }
+
+                            }
+                            Log.d("CEK BUNDLE LOGIN1", "data: $dataBundle")
+
+
+
+                            // PERLU DIGANTI!!
+                            val eIntent = Intent(this@Login, tesHome::class.java).apply {
+                                putExtra("DATA", dataBundle)
+                            }
+                            startActivity(eIntent)
+
+                        }
+                        .addOnFailureListener { exception ->
+                            // Handle error
+                        }
+
+                    Log.d("CEK BUNDLE LOGIN", "data: $dataBundle")
+
+
+
+
                 }
             }
 
