@@ -66,7 +66,7 @@ class OtpActivity : AppCompatActivity() {
                 builder.setTitle("Apakah anda tidak mendapat pesan kode OTP?")
                 builder.setMessage("Kirimkan kode OTP lagi!")
                 builder.setPositiveButton("Ok") { dialog, which ->
-                    val otp = generateOTP()
+                    val otp = generateOTP(nohp.toString())
                     Log.d("OTP", otp)
                     //TAMBAHKAN PENGECEKAN HASIL RUNDOM KALO SUDAH PERNAH MAKA AKAN DI PANGGIL ULANG generateOTP()
                     val MY_PERMISSIONS_REQUEST_SEND_SMS = 123
@@ -105,7 +105,7 @@ class OtpActivity : AppCompatActivity() {
                 if (etCd1.text.toString() == getOtp.get(0).toString() && etCd2.text.toString() == getOtp.get(1).toString() &&
                     etCd3.text.toString() == getOtp.get(2).toString() && etCd4.text.toString() == getOtp.get(3).toString() &&
                     etCd5.text.toString() == getOtp.get(4).toString() && etCd6.text.toString() == getOtp.get(5).toString()){
-                    TambahData(nick.toString(), user.toString(), pass.toString(), age!!.toInt(), sex.toString(), nohp.toString())
+                    TambahData(nick.toString(), user.toString(), pass.toString(), age!!.toInt(), sex.toString(), nohp.toString(), getOtp)
                     startActivity(Intent(this@OtpActivity, Login::class.java))
                 }
                 else{
@@ -116,13 +116,27 @@ class OtpActivity : AppCompatActivity() {
 
     }
 
-    fun generateOTP(): String {
+    fun generateOTP(noHp: String): String {
         val random = Random()
         val num = random.nextInt(900000) + 100000
+        val query = db.collection("otp").whereEqualTo("noHp", noHp)
+        query.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val otp = document.getString("otp")
+                    // do something with the otp
+
+                    if (num.toString() == otp){
+                        generateOTP(noHp)
+                    }
+                }
+            }
+
+
         return num.toString()
     }
 
-    private fun TambahData(nickname: String, username: String, password: String, age: Int, sex: String, nohp: String) {
+    private fun TambahData(nickname: String, username: String, password: String, age: Int, sex: String, nohp: String, otp: String) {
         val user = hashMapOf(
             "nickname" to nickname,
             "username" to username,
@@ -132,6 +146,11 @@ class OtpActivity : AppCompatActivity() {
             "nohp" to nohp
         )
 
+        val otp1 = hashMapOf(
+            "noHp" to nohp,
+            "otp" to otp
+        )
+
         db.collection("account").add(user)
             .addOnSuccessListener { documentReference ->
                 Log.d("CEK REGISTER", "DocumentSnapshot added with ID: ${documentReference.id}")
@@ -139,5 +158,8 @@ class OtpActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.w("CEK REGISTER", "Error adding document", e)
             }
+
+        db.collection("otp").add(otp1)
     }
+
 }
