@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
         val db = FirebaseFirestore.getInstance()
-        val threadsRef = db.collection("threads").orderBy("date", Query.Direction.DESCENDING)
+        val threadsRef = db.collection("threads").whereEqualTo("hirarki", "").orderBy("date", Query.Direction.DESCENDING)
         var dataBundle = ArrayList<thread>()
 //
         threadsRef.get()

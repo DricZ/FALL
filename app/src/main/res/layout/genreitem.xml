@@ -10,8 +10,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="77dp"
-            android:layout_height="39dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/textViewGenre"

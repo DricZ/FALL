@@ -1,12 +1,78 @@
 package com.example.fall
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.TextView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class CommentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
+
+        val _tJudul = findViewById<TextView>(R.id.tJudul)
+        val _tIsi = findViewById<TextView>(R.id.tIsi)
+        val _tLike = findViewById<TextView>(R.id.tLike)
+        val _tDis = findViewById<TextView>(R.id.tDis)
+
+
+        val db = FirebaseFirestore.getInstance()
+//        Log.d("JUDUL", thread.judul?)
+        val getThread = intent.getStringExtra("THREADS")
+        val listView = findViewById<ListView>(R.id.listviewComment)
+        val adapter = ArrayAdapter<thread>(this, android.R.layout.simple_list_item_1)
+        listView.adapter = adapter
+
+        val colRef1 = db.collection("threads").whereEqualTo("id", getThread)
+        colRef1.get()
+            .addOnSuccessListener { anjer ->
+                for (anjers in anjer) {
+                    val idGenre = anjers.getString("id_genre")
+                    val idUser = anjers.getString("id_user")
+                    val judul = anjers.getString("judul")
+                    val isi = anjers.getString("isi")
+                    val like = anjers.getLong("like")
+                    val dislike = anjers.getLong("dislike")
+                    val date = anjers.getTimestamp("date")?.toDate()
+
+                    _tJudul.setText(judul)
+                    _tIsi.setText(isi)
+                    _tLike.setText(like.toString())
+                    _tDis.setText(dislike.toString())
+                }
+
+            }
+
+        val colRef = db.collection("threads").whereEqualTo("hirarki", getThread).orderBy("date", Query.Direction.ASCENDING)
+        colRef.get()
+            .addOnSuccessListener { anjer ->
+                for (anjers in anjer) {
+                    val idGenre = anjers.getString("id_genre")
+                    val idUser = anjers.getString("id_user")
+                    val hirarki = anjers.getString("hirarki")
+                    val judul = anjers.getString("judul")
+                    val isi = anjers.getString("isi")
+                    val like = anjers.getLong("like")
+                    val dislike = anjers.getLong("dislike")
+                    val date = anjers.getTimestamp("date")?.toDate()
+                    adapter.add(date?.let {
+                        thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
+                            it
+                        )
+                    })
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+
+
+
+//        Log.d("ID THREADS", getThread.toString())
 
     }
 }

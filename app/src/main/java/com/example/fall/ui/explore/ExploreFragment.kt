@@ -53,6 +53,8 @@ class ExploreFragment : Fragment() {
         val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
         val db = FirebaseFirestore.getInstance()
 
+
+
         //AMBIL DATA GENRE LIST
         // Tentukan referensi collection yang akan digunakan
         val colRef = db.collection("genre")
@@ -85,7 +87,7 @@ class ExploreFragment : Fragment() {
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
 
-        val threadsRef = db.collection("threads").orderBy("date", Query.Direction.DESCENDING)
+        val threadsRef = db.collection("threads").whereEqualTo("hirarki", "").orderBy("date", Query.Direction.DESCENDING)
         var dataBundle = ArrayList<thread>()
 //
         threadsRef.get()
