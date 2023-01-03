@@ -34,6 +34,9 @@ class Registration2 : AppCompatActivity() {
         var tvSex = findViewById<TextView>(R.id.regSex)
         val etPhone = findViewById<EditText>(R.id.regPhone)
         val btnRegistn = findViewById<Button>(R.id.buttonRegist)
+        val user = intent.getStringExtra("user")
+        val pass = intent.getStringExtra("pass")
+        val age = intent.getStringExtra("age")
 
         imgShuffle.setOnClickListener {
             randomNickName()
@@ -76,6 +79,11 @@ class Registration2 : AppCompatActivity() {
                 startActivity(Intent(this@Registration2, OtpActivity::class.java).apply {
                     putExtra("OTP", otp)
                     putExtra("noHp", phoneNumber)
+                    putExtra("user", user)
+                    putExtra("pass", pass)
+                    putExtra("age", age)
+                    putExtra("nick", etNn.text.toString())
+                    putExtra("sex", tvSex.text.toString())
                 })
             }
         }
