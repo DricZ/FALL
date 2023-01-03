@@ -52,6 +52,7 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
+        val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
 
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
