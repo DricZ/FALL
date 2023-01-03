@@ -4,12 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CommentActivity">
+    tools:context=".CommentActivity"
+    android:background="@color/bg">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#2E3442"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +33,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:background="@drawable/profilepic4" />
 
             <TextView
                 android:id="@+id/tJudul"
@@ -36,6 +43,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/lato_black"
                 android:text="Username"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView8"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,6 +55,7 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/lato_semibolditalic"
                 android:text="Isi Thread"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/tJudul"
                 app:layout_constraintTop_toBottomOf="@+id/tJudul" />
 
@@ -61,7 +70,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView8"
                 app:layout_constraintVertical_bias="0.86"
-                app:srcCompat="@drawable/ic_baseline_thumb_up_alt_24" />
+                app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
 
             <ImageView
                 android:id="@+id/imageView10"
@@ -71,7 +80,7 @@
                 app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toEndOf="@+id/imageView9"
                 app:layout_constraintTop_toTopOf="@+id/imageView9"
-                app:srcCompat="@drawable/ic_baseline_thumb_down_alt_24" />
+                app:srcCompat="@drawable/ic_baseline_thumb_down_24" />
 
             <TextView
                 android:id="@+id/tLike"
@@ -79,8 +88,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
                 android:text="0"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
+                android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/imageView9"
                 app:layout_constraintStart_toStartOf="@+id/imageView9"
                 app:layout_constraintTop_toBottomOf="@+id/imageView9" />
@@ -91,11 +101,21 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_regular"
                 android:text="0"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView10"
                 app:layout_constraintStart_toStartOf="@+id/imageView10"
                 app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+
+            <ImageView
+                android:id="@+id/imageViewComment2"
+                android:layout_width="35dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tIsi"
+                app:layout_constraintStart_toEndOf="@+id/tIsi"
+                app:srcCompat="@drawable/ic_baseline_comment_24"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

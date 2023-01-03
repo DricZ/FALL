@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ class CommentActivity : AppCompatActivity() {
         val _tIsi = findViewById<TextView>(R.id.tIsi)
         val _tLike = findViewById<TextView>(R.id.tLike)
         val _tDis = findViewById<TextView>(R.id.tDis)
+        val btnComment2 = findViewById<ImageView>(R.id.imageViewComment2)
 
 
         val db = FirebaseFirestore.getInstance()
@@ -96,6 +98,19 @@ class CommentActivity : AppCompatActivity() {
             }
 
 
+
+        btnComment2.setOnClickListener {
+            val colRef2 = db.collection("threads").whereEqualTo("judul", _tJudul.text.toString()).whereEqualTo("isi", _tIsi.text.toString())
+            colRef2.get()
+                .addOnSuccessListener { anjer ->
+                    for (anjers in anjer){
+                        val id = anjers.id
+                       startActivity(Intent(this, AddCommentActivity::class.java).apply {
+                            putExtra("THREADS", id)
+                        })
+                    }
+                }
+        }
 
         Log.d("ID THREADS", getThread.toString())
 
