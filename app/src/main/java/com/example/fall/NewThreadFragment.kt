@@ -92,6 +92,9 @@ class NewThreadFragment : Fragment() {
                     _newGen.visibility = View.VISIBLE
                     Log.d("CEK SPIN1", "true")
                 }
+                else if (parent.getItemAtPosition(position) as String == hint){
+                    genre =""
+                }
                 else{
                     _newGen.visibility = View.GONE
                     genre = parent.getItemAtPosition(position) as String
@@ -118,7 +121,7 @@ class NewThreadFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (genre == hint ) {
+            if (genre.isEmpty() ) {
                 Toast.makeText(view.context, "Silahkan pilih Genre!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

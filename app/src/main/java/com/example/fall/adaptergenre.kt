@@ -15,7 +15,7 @@ class adaptergenre(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view : View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.threaditem, parent, false)
+            .inflate(R.layout.genreitem, parent, false)
         return ListViewHolder(view)
     }
 
