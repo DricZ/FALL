@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -75,8 +76,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_semibolditalic"
                         android:text="Coding"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -110,8 +111,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_semibolditalic"
                         android:text="Computer Science"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -146,8 +147,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_semibolditalic"
                         android:text="Movie"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -161,27 +162,28 @@
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvThreadExplore"
         android:layout_width="410dp"
         android:layout_height="542dp"
-        android:id="@+id/rvThreadExplore"
+        android:layout_marginTop="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" >
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/loading_animationExp"-->
-<!--        android:layout_width="90dp"-->
-<!--        android:layout_height="90dp"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_rawRes="@raw/trans_load" />-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animationExp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/trans_load" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

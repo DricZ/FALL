@@ -102,10 +102,10 @@ class HomeFragment : Fragment() {
                     }
 
                     Log.d("CEK DATA HOME", "Data: $dataBundle")
-//                    val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
-//                    rvThread.layoutManager = LinearLayoutManager(view.context)
-//                    val adapterRV = adapterthread(dataBundle)
-//                    rvThread.adapter = adapterRV
+                    val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
+                    rvThread.layoutManager = LinearLayoutManager(view.context)
+                    val adapterRV = adapterthread(dataBundle)
+                    rvThread.adapter = adapterRV
 
                 }
 
@@ -116,10 +116,10 @@ class HomeFragment : Fragment() {
             }
 
 
-        if (arguments != null){
-            dataBundle = arguments?.getParcelableArrayList<thread>("DATA") as ArrayList<thread>
-            Log.d("DATA_BUNDLE", "data: $dataBundle")
-        }
+//        if (arguments != null){
+//            dataBundle = arguments?.getParcelableArrayList<thread>("DATA") as ArrayList<thread>
+//            Log.d("DATA_BUNDLE", "data: $dataBundle")
+//        }
 
 
 
