@@ -10,10 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
-import com.example.fall.R
-import com.example.fall.adapterthread
+import com.example.fall.*
 import com.example.fall.databinding.FragmentExploreBinding
-import com.example.fall.thread
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -53,10 +51,38 @@ class ExploreFragment : Fragment() {
 
         val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
         val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
+        val db = FirebaseFirestore.getInstance()
 
+        //AMBIL DATA GENRE LIST
+        // Tentukan referensi collection yang akan digunakan
+        val colRef = db.collection("genre")
+        var arrGen = arrayListOf<genre>()
+
+        // Mengambil semua document dari collection
+        colRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                // Iterate through the documents in the collection
+                for (documentSnapshot in querySnapshot) {
+                    // Ambil nama dari setiap document
+                    val name1 = documentSnapshot.getString("name")
+                    Log.d("GENRE DB", name1.toString())
+                    val nt = genre(name1.toString())
+
+                    arrGen.add(nt)
+                }
+
+            }
+            .addOnFailureListener { exception ->
+                // Handle error
+            }
+
+        Log.d("Array Gen", "Data: $arrGen")
+        rvGenre.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        val adapterRV = adaptergenre(arrGen)
+        rvGenre.adapter = adapterRV
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
-        val db = FirebaseFirestore.getInstance()
+
         val threadsRef = db.collection("threads").orderBy("date", Query.Direction.DESCENDING)
         var dataBundle = ArrayList<thread>()
 //
