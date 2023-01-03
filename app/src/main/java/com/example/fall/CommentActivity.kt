@@ -28,27 +28,29 @@ class CommentActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<thread>(this, android.R.layout.simple_list_item_1)
         listView.adapter = adapter
 
-        val colRef1 = db.collection("threads").whereEqualTo("id", getThread)
-        colRef1.get()
+        val threadsRef = db.collection("threads")
+        val docRef = threadsRef.document(getThread.toString())
+        docRef.get()
             .addOnSuccessListener { anjer ->
-                for (anjers in anjer) {
-                    val idGenre = anjers.getString("id_genre")
-                    val idUser = anjers.getString("id_user")
-                    val judul = anjers.getString("judul")
-                    val isi = anjers.getString("isi")
-                    val like = anjers.getLong("like")
-                    val dislike = anjers.getLong("dislike")
-                    val date = anjers.getTimestamp("date")?.toDate()
+                    val idGenre = anjer.getString("id_genre")
+                    val idUser = anjer.getString("id_user")
+                    val judul = anjer.getString("judul")
+                    val isi = anjer.getString("isi")
+                    val like = anjer.getLong("like")
+                    val dislike = anjer.getLong("dislike")
+                    val date = anjer.getTimestamp("date")?.toDate()
 
                     _tJudul.setText(judul)
                     _tIsi.setText(isi)
                     _tLike.setText(like.toString())
                     _tDis.setText(dislike.toString())
+
+                    Log.d("CEK JUDUL C", _tJudul.text.toString())
                 }
 
-            }
 
-        val colRef = db.collection("threads").whereEqualTo("hirarki", getThread).orderBy("date", Query.Direction.ASCENDING)
+
+        val colRef = db.collection("threads").whereEqualTo("hirarki", getThread).orderBy("date", Query.Direction.DESCENDING)
         colRef.get()
             .addOnSuccessListener { anjer ->
                 for (anjers in anjer) {
@@ -72,7 +74,7 @@ class CommentActivity : AppCompatActivity() {
 
 
 
-//        Log.d("ID THREADS", getThread.toString())
+        Log.d("ID THREADS", getThread.toString())
 
     }
 }

@@ -10,18 +10,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class adapterthread(
     private val listThread: ArrayList<thread>?
-        ) : RecyclerView.Adapter<adapterthread.ListViewHolder>(){
+) : RecyclerView.Adapter<adapterthread.ListViewHolder>(){
 
-   inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-       var _judulThread :TextView = itemView.findViewById(R.id.tJudul)
-       var _isiThread : TextView = itemView.findViewById(R.id.tIsi)
-       var _totLike : TextView = itemView.findViewById(R.id.tLike)
-       var _totDis : TextView = itemView.findViewById(R.id.tDis)
-       val _dateTh: TextView = itemView.findViewById(R.id.dateTh)
-       val _cardThread: View = itemView.findViewById(R.id.cardThread)
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        var _judulThread :TextView = itemView.findViewById(R.id.tJudul)
+        var _isiThread : TextView = itemView.findViewById(R.id.tIsi)
+        var _totLike : TextView = itemView.findViewById(R.id.tLike)
+        var _totDis : TextView = itemView.findViewById(R.id.tDis)
+        val _dateTh: TextView = itemView.findViewById(R.id.dateTh)
+        val _cardThread: View = itemView.findViewById(R.id.cardThread)
 //               var _totalThumbsUp : ImageView = itemView.findViewById(R.id.imageView9)
 //               var _totalThumbsDown : ImageView = itemView.findViewById(R.id.imageView10)
-   }
+    }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
     interface OnItemClickCallback{
