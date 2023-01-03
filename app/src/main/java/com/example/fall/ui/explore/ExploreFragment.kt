@@ -65,21 +65,23 @@ class ExploreFragment : Fragment() {
                 for (documentSnapshot in querySnapshot) {
                     // Ambil nama dari setiap document
                     val name1 = documentSnapshot.getString("name")
-                    Log.d("GENRE DB", name1.toString())
+
                     val nt = genre(name1.toString())
 
                     arrGen.add(nt)
-                }
+                    Log.d("Array Gen", "Data: $arrGen")
 
+
+                }
+                rvGenre.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, true)
+                val adapterRV = adaptergenre(arrGen)
+                rvGenre.adapter = adapterRV
             }
             .addOnFailureListener { exception ->
                 // Handle error
             }
 
-        Log.d("Array Gen", "Data: $arrGen")
-        rvGenre.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
-        val adapterRV = adaptergenre(arrGen)
-        rvGenre.adapter = adapterRV
+
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
 
