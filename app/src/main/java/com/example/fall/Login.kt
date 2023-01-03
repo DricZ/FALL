@@ -17,6 +17,7 @@ class Login : AppCompatActivity() {
 
     private var _userN : MutableList<String> = emptyList<String>().toMutableList()
     private var _pass : MutableList<String> = emptyList<String>().toMutableList()
+    private var _id : MutableList<String> = emptyList<String>().toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class Login : AppCompatActivity() {
         val _loginUsr = findViewById<EditText>(R.id.loginUsr)
         val _loginPass = findViewById<EditText>(R.id.regPass)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
+
 
         db = FirebaseFirestore.getInstance()
         val sharedPreferences = getSharedPreferences("SessionUser", Context.MODE_PRIVATE)
@@ -40,6 +42,7 @@ class Login : AppCompatActivity() {
                 for (document in documents) {
                     _userN.add(document.data["username"].toString())
                     _pass.add(document.data["password"].toString())
+                    _id.add(document.id.toString())
                     Log.d("CEK DATA", "CEK ${_userN}")
                     Log.d("GET DATA", "${document.id} => ${document.data}")
                 }
@@ -64,7 +67,7 @@ class Login : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    editor.putString("name", _loginUsr.text.toString())
+                    editor.putString("id_user", _id[x].toString())
                     editor.apply()
 // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
 
