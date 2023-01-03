@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -25,7 +27,7 @@ class CommentActivity : AppCompatActivity() {
 //        Log.d("JUDUL", thread.judul?)
         val getThread = intent.getStringExtra("THREADS")
 //        val listView = findViewById<ListView>(R.id.listviewComment)
-        val adapter = ArrayAdapter<thread>(this, android.R.layout.simple_list_item_1)
+//        val adapter = ArrayAdapter<thread>(this, android.R.layout.simple_list_item_1)
 //        listView.adapter = adapter
 
         val threadsRef = db.collection("threads")
@@ -51,6 +53,7 @@ class CommentActivity : AppCompatActivity() {
 
 
         val colRef = db.collection("threads").whereEqualTo("hirarki", getThread).orderBy("date", Query.Direction.DESCENDING)
+        var dataBundle = ArrayList<thread>()
         colRef.get()
             .addOnSuccessListener { anjer ->
                 for (anjers in anjer) {
@@ -62,12 +65,32 @@ class CommentActivity : AppCompatActivity() {
                     val like = anjers.getLong("like")
                     val dislike = anjers.getLong("dislike")
                     val date = anjers.getTimestamp("date")?.toDate()
-                    adapter.add(date?.let {
-                        thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
-                            it
-                        )
-                    })
-                    adapter.notifyDataSetChanged()
+
+
+//                    adapter.add(date?.let {
+//                        thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
+//                            it
+//                        )
+//                    })
+//                    adapter.notifyDataSetChanged()
+                    // Tambahkan data ke dalam list
+                    val newThread =
+                        date?.let {
+                            thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
+                                it
+                            )
+                        }
+
+                    if (newThread != null) {
+                        dataBundle.add(newThread)
+                    }
+
+                    Log.d("CEK DATA COMMENT", "Data: $dataBundle")
+                    val rvThread = findViewById<RecyclerView>(R.id.rvComment)
+                    rvThread.layoutManager = LinearLayoutManager(this)
+                    val adapterRV = adapterthread(dataBundle)
+                    rvThread.adapter = adapterRV
+
                 }
 
             }

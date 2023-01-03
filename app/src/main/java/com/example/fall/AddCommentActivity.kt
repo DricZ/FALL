@@ -1,5 +1,6 @@
 package com.example.fall
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,6 +45,9 @@ class AddCommentActivity : AppCompatActivity() {
 
                     db.collection("threads").add(listThread)
                 }
+            startActivity(Intent(this@AddCommentActivity, CommentActivity::class.java).apply {
+                putExtra("THREADS", getThread)
+            })
         }
 
     }
