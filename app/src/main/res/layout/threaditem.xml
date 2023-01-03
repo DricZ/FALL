@@ -6,9 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="10dp"
-    app:cardCornerRadius="20dp"
-    android:id="@+id/cardThread"
-    android:backgroundTint="@color/text">
+    app:cardCornerRadius="30dp"
+    android:id="@+id/cardThread">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +22,7 @@
             android:layout_marginStart="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateTh"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:background="@drawable/profilepic4" />
 
         <TextView
             android:id="@+id/tJudul"
