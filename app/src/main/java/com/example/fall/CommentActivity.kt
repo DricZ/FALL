@@ -24,9 +24,9 @@ class CommentActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 //        Log.d("JUDUL", thread.judul?)
         val getThread = intent.getStringExtra("THREADS")
-        val listView = findViewById<ListView>(R.id.listviewComment)
+//        val listView = findViewById<ListView>(R.id.listviewComment)
         val adapter = ArrayAdapter<thread>(this, android.R.layout.simple_list_item_1)
-        listView.adapter = adapter
+//        listView.adapter = adapter
 
         val threadsRef = db.collection("threads")
         val docRef = threadsRef.document(getThread.toString())

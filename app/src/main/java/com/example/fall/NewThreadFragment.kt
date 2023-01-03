@@ -29,7 +29,7 @@ class NewThreadFragment : Fragment() {
 
         val btnPost = view.findViewById<Button>(R.id.buttonPostThread)
         val etTilte = view.findViewById<EditText>(R.id.titleNewThread)
-        val etIsi = view.findViewById<EditText>(R.id.isiNewThread)
+        val etIsi = view.findViewById<EditText>(R.id.isiComment)
 
 
 

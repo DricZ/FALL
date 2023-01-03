@@ -105,5 +105,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/imageViewComment"
+            android:layout_width="35dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tIsi"
+            app:layout_constraintStart_toEndOf="@+id/tIsi"
+            app:srcCompat="@drawable/ic_baseline_comment_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

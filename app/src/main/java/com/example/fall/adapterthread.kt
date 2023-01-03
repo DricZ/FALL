@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,6 +20,7 @@ class adapterthread(
         var _totDis : TextView = itemView.findViewById(R.id.tDis)
         val _dateTh: TextView = itemView.findViewById(R.id.dateTh)
         val _cardThread: View = itemView.findViewById(R.id.cardThread)
+        val _comment: ImageView = itemView.findViewById(R.id.imageViewComment)
 //               var _totalThumbsUp : ImageView = itemView.findViewById(R.id.imageView9)
 //               var _totalThumbsDown : ImageView = itemView.findViewById(R.id.imageView10)
     }
@@ -59,7 +61,21 @@ class adapterthread(
                         })
                     }
                 }
+        }
 
+        holder._comment.setOnClickListener {
+//            onItemClickCallback.editThread(position)
+//            Log.d("WOE", "PLIS")
+            val colRef = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
+            colRef.get()
+                .addOnSuccessListener { anjer ->
+                    for (anjers in anjer){
+                        val id = anjers.id
+                        holder._cardThread.context.startActivity(Intent(holder._cardThread.context, AddCommentActivity::class.java).apply {
+                            putExtra("THREADS", id)
+                        })
+                    }
+                }
         }
     }
 
