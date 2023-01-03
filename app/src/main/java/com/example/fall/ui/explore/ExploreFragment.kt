@@ -17,6 +17,19 @@ import com.google.firebase.firestore.Query
 
 class ExploreFragment : Fragment() {
 
+//    private var _genreId: String? = null
+
+//    // Setter untuk argument genreId
+//    fun setGenreId(genreId: String) {
+//        this._genreId = genreId
+//    }
+//
+//    fun createExploreFragment(genreId: String): ExploreFragment {
+//        val fragment = ExploreFragment()
+//        fragment.setGenreId(genreId)
+//        return fragment
+//    }
+
     private var _binding: FragmentExploreBinding? = null
 
     // This property is only valid between onCreateView and
@@ -53,12 +66,17 @@ class ExploreFragment : Fragment() {
         val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
         val db = FirebaseFirestore.getInstance()
 
-
+//        val bundle = arguments?.getString("POS")
+//        if (bundle != null) {
+//            Log.d("HASIL", bundle)
+//        }
 
         //AMBIL DATA GENRE LIST
         // Tentukan referensi collection yang akan digunakan
         val colRef = db.collection("genre")
         var arrGen = arrayListOf<genre>()
+        var dataBundle = ArrayList<thread>()
+        var dataBundle2 = ArrayList<thread>()
 
         // Mengambil semua document dari collection
         colRef.get()
@@ -76,19 +94,62 @@ class ExploreFragment : Fragment() {
 
                 }
                 rvGenre.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, true)
-                val adapterRV = adaptergenre(arrGen)
-                rvGenre.adapter = adapterRV
+                val adapterRVGen = adaptergenre(arrGen)
+                rvGenre.adapter = adapterRVGen
+
+        adapterRVGen.setOnItemClickListener(object: adaptergenre.OnItemClickCallback{
+            override fun editThread(pos: String) {
+                dataBundle2.clear()
+                Log.d("TES EDIT", pos)
+                val colGen = db.collection("threads").whereEqualTo("id_genre", pos).orderBy("date", Query.Direction.DESCENDING)
+                colGen.get()
+                    .addOnSuccessListener { anjer ->
+                        for (documentSnapshot in anjer){
+                            // Ambil judul dari setiap document
+                            val idGenre = documentSnapshot.getString("id_genre")
+                            val idUser = documentSnapshot.getString("id_user")
+                            val hirarki = documentSnapshot.getString("hirarki")
+                            val judul = documentSnapshot.getString("judul")
+                            val isi = documentSnapshot.getString("isi")
+                            val like = documentSnapshot.getLong("like")
+                            val dislike = documentSnapshot.getLong("dislike")
+                            val date = documentSnapshot.getTimestamp("date")?.toDate()
+
+                            // Tambahkan data ke dalam list
+                            val newThread =
+                                date?.let {
+                                    thread(idGenre, idUser, hirarki, judul, isi, like, dislike,
+                                        it
+                                    )
+                                }
+
+                            if (newThread != null) {
+                                dataBundle2.add(newThread)
+                            }
+
+                            Log.d("CEK DATA Explore", "Data: $dataBundle2")
+                            val rvThread = view.findViewById<RecyclerView>(R.id.rvThreadExplore)
+                            rvThread.layoutManager = LinearLayoutManager(view.context)
+                            val adapterRV = adapterthread(dataBundle2)
+                            rvThread.adapter = adapterRV
+
+                        }
+                    }
             }
-            .addOnFailureListener { exception ->
-                // Handle error
-            }
+        })
+    }
+    .addOnFailureListener { exception ->
+        // Handle error
+    }
+
+
 
 
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
 
         val threadsRef = db.collection("threads").whereEqualTo("hirarki", "").orderBy("date", Query.Direction.DESCENDING)
-        var dataBundle = ArrayList<thread>()
+
 //
         threadsRef.get()
             .addOnSuccessListener { querySnapshot ->
