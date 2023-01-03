@@ -76,7 +76,7 @@ class ExploreFragment : Fragment() {
         val colRef = db.collection("genre")
         var arrGen = arrayListOf<genre>()
         var dataBundle = ArrayList<thread>()
-        var dataBundle2 = ArrayList<thread>()
+
 
         // Mengambil semua document dari collection
         colRef.get()
@@ -99,7 +99,8 @@ class ExploreFragment : Fragment() {
 
         adapterRVGen.setOnItemClickListener(object: adaptergenre.OnItemClickCallback{
             override fun editThread(pos: String) {
-                dataBundle2.clear()
+                var dataBundle2 = ArrayList<thread>()
+//                dataBundle2.clear()
                 Log.d("TES EDIT", pos)
                 val colGen = db.collection("threads").whereEqualTo("id_genre", pos).orderBy("date", Query.Direction.DESCENDING)
                 colGen.get()
@@ -149,7 +150,6 @@ class ExploreFragment : Fragment() {
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
 
         val threadsRef = db.collection("threads").whereEqualTo("hirarki", "").orderBy("date", Query.Direction.DESCENDING)
-
 //
         threadsRef.get()
             .addOnSuccessListener { querySnapshot ->
