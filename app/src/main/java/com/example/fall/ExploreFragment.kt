@@ -32,7 +32,7 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
+//        val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
         val db = FirebaseFirestore.getInstance()
@@ -73,7 +73,7 @@ class ExploreFragment : Fragment() {
 
                 }
 
-                _loading.visibility = View.INVISIBLE
+//                _loading.visibility = View.INVISIBLE
             }
             .addOnFailureListener { exception ->
                 // Handle error
