@@ -2,12 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardThread"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_margin="10dp"
-    app:cardCornerRadius="30dp"
-    android:id="@+id/cardThread">
+    android:orientation="vertical"
+    app:cardCornerRadius="30dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,20 +19,25 @@
             android:id="@+id/imageView8"
             android:layout_width="67dp"
             android:layout_height="62dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/profilepic4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTh"
-            android:background="@drawable/profilepic4" />
+            app:layout_constraintTop_toBottomOf="@+id/dateTh" />
 
         <TextView
             android:id="@+id/tJudul"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:autoText="true"
+            android:elegantTextHeight="true"
             android:fontFamily="@font/lato_black"
+            android:inputType="text"
+            android:minHeight="48dp"
             android:text="Username"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/imageView8"
             app:layout_constraintTop_toBottomOf="@+id/dateTh" />
 
@@ -40,10 +45,16 @@
             android:id="@+id/tIsi"
             android:layout_width="189dp"
             android:layout_height="77dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:autoText="false"
             android:fontFamily="@font/lato_semibolditalic"
+            android:inputType="text"
+            android:padding="5dp"
             android:text="Isi Thread"
             android:textColor="@color/white"
+            android:textIsSelectable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tJudul"
             app:layout_constraintTop_toBottomOf="@+id/tJudul" />
 
@@ -57,7 +68,7 @@
             app:layout_constraintHorizontal_bias="0.363"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView8"
-            app:layout_constraintVertical_bias="0.86"
+            app:layout_constraintVertical_bias="0.472"
             app:srcCompat="@drawable/ic_baseline_thumb_up_24_nonact" />
 
         <ImageView
@@ -109,8 +120,11 @@
             android:layout_width="35dp"
             android:layout_height="32dp"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/tIsi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.777"
             app:layout_constraintStart_toEndOf="@+id/tIsi"
             app:srcCompat="@drawable/ic_baseline_comment_24" />
 

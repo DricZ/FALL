@@ -72,8 +72,11 @@ class adapterthread(
 
                                     if (type == "up"){
                                         holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                                        holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24_nonact)
                                     } else if( type == "down"){
                                         holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
+                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
+
                                     }
                                     // do something with the type
                                 }
@@ -100,6 +103,30 @@ class adapterthread(
                     }
                 }
         }
+
+//        holder._totalThumbsUp.setOnClickListener {
+//            val threadsRef = db.collection("threads").document(thread.id)
+//            threadsRef.get()
+//                .addOnSuccessListener { documentSnapshot ->
+//                    val like = documentSnapshot.getLong("like")
+//                    threadsRef.update("like", like!! + 1)
+//                        .addOnSuccessListener {
+//                            // Update berhasil
+//                            holder._totalThumbsUp.setImageResource(R.drawable.ic_thumb_up_clicked)
+//                            holder._totLike.text = (like + 1).toString()
+//                        }
+//                        .addOnFailureListener { exception ->
+//                            // Update gagal
+//                        }
+//                }
+//                .addOnFailureListener { exception ->
+//                    // Gagal ambil data
+//                }
+//        }
+//
+
+
+
 
         holder._totalThumbsUp.setOnClickListener {
 
@@ -137,7 +164,7 @@ class adapterthread(
                                                             .addOnSuccessListener {
                                                                 // Update berhasil
                                                                 holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                                holder._totLike.setText((thread.like!! +1).toString())
+                                                                holder._totLike.text = (like + 1).toString()
                                                             }
                                                             .addOnFailureListener { exception ->
                                                                 // Update gagal
@@ -164,7 +191,7 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
-                                                                        holder._totLike.setText(thread.like.toString())
+                                                                        holder._totLike.text = (like - 1).toString()
 
                                                                         db.collection("thumbs").document(idThumbs).delete()
                                                                     }
@@ -189,7 +216,7 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24_nonact)
-                                                                        holder._totDis.setText((thread.dislike).toString())
+                                                                        holder._totDis.text = (dislike - 1).toString()
                                                                     }
                                                                     .addOnFailureListener { exception ->
                                                                         // Update gagal
@@ -198,12 +225,13 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                                        holder._totLike.setText((thread.like).toString())
+                                                                        holder._totLike.text = (like + 1).toString()
+                                                                        db.collection("thumbs").document(idThumbs).update("type", "up")
                                                                     }
                                                                     .addOnFailureListener { exception ->
                                                                         // Update gagal
                                                                     }
-                                                                db.collection("thumbs").document(idThumbs).update("type", "up")
+
 
 
                                                             }
@@ -259,7 +287,7 @@ class adapterthread(
                                                             .addOnSuccessListener {
                                                                 // Update berhasil
                                                                 holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-                                                                holder._totDis.setText((thread.dislike!! +1).toString())
+                                                                holder._totDis.text = (dislike + 1).toString()
                                                             }
                                                             .addOnFailureListener { exception ->
                                                                 // Update gagal
@@ -273,7 +301,7 @@ class adapterthread(
                                                 // Iterate through the documents in the snapshot
                                                 for (document in documentSnapshot) {
                                                     val type = document.getString("type")
-                                                    val idThumbs = document.id
+                                                    val idThumbs1 = document.id
 
 
                                                     if (type == "up"){
@@ -289,7 +317,7 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
-                                                                        holder._totLike.setText((thread.like).toString())
+                                                                        holder._totLike.text = (like - 1).toString()
                                                                     }
                                                                     .addOnFailureListener { exception ->
                                                                         // Update gagal
@@ -298,12 +326,13 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-                                                                        holder._totDis.setText((thread.dislike).toString())
+                                                                        holder._totDis.text = (dislike + 1).toString()
+                                                                        db.collection("thumbs").document(idThumbs1).update("type", "down")
+
                                                                     }
                                                                     .addOnFailureListener { exception ->
                                                                         // Update gagal
                                                                     }
-                                                                db.collection("thumbs").document(idThumbs).update("type", "up")
                                                             }
                                                             .addOnFailureListener { exception ->
                                                                 // Gagal ambil data
@@ -322,8 +351,8 @@ class adapterthread(
                                                                     .addOnSuccessListener {
                                                                         // Update berhasil
                                                                         holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24_nonact)
-                                                                        holder._totDis.setText((thread.dislike).toString())
-                                                                        db.collection("thumbs").document(idThumbs).delete()
+                                                                        holder._totDis.text = (dislike - 1).toString()
+                                                                        db.collection("thumbs").document(idThumbs1).delete()
                                                                     }
                                                                     .addOnFailureListener { exception ->
                                                                         // Update gagal
