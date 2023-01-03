@@ -42,7 +42,7 @@ class NewThreadFragment : Fragment() {
         // INISIALISASI FIRESTORE
         val db = FirebaseFirestore.getInstance()
         val sharedPreferences = view.context.getSharedPreferences("SessionUser", Context.MODE_PRIVATE)
-        val savedName = sharedPreferences.getString("name", "")
+        val savedName = sharedPreferences.getString("id_user", "")
 
 
         // access the spinner

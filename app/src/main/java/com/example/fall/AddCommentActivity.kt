@@ -20,7 +20,7 @@ class AddCommentActivity : AppCompatActivity() {
         val docRef = threadsRef.document(getThread.toString())
         val listThread = HashMap<String, Any>()
         val sharedPreferences = getSharedPreferences("SessionUser", MODE_PRIVATE)
-        val savedName = sharedPreferences.getString("name", "")
+        val savedName = sharedPreferences.getString("id_user", "")
         val isiComment = findViewById<EditText>(R.id.isiComment)
         val btnPostComment = findViewById<Button>(R.id.buttonPostThreadNew)
         val calendar = Calendar.getInstance()
