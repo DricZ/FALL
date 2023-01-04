@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.HashMap
 
 class adapterthread(
     private val listThread: ArrayList<thread>?
@@ -22,7 +20,7 @@ class adapterthread(
         var _totLike : TextView = itemView.findViewById(R.id.tLike)
         var _totDis : TextView = itemView.findViewById(R.id.tDis)
         val _dateTh: TextView = itemView.findViewById(R.id.dateTh)
-        val _cardThread: View = itemView.findViewById(R.id.cardThread)
+        val _cardThread: View = itemView.findViewById(R.id.cardView5)
         val _comment: ImageView = itemView.findViewById(R.id.imageViewComment)
         var _totalThumbsUp : ImageView = itemView.findViewById(R.id.imageView9)
         var _totalThumbsDown : ImageView = itemView.findViewById(R.id.imageView10)
@@ -53,6 +51,7 @@ class adapterthread(
         holder._totLike.setText(thread.like.toString())
         holder._totDis.setText(thread.dislike.toString())
         holder._dateTh.setText(thread.date.toString())
+
 
         val colRefthumb = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
         colRefthumb.get()
@@ -130,246 +129,259 @@ class adapterthread(
 
         holder._totalThumbsUp.setOnClickListener {
 
-            val colRef = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
-            colRef.get()
-                .addOnSuccessListener { anjer ->
-                    for (anjers in anjer){
-                        val id = anjers.id
-                        val docRef2 = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
 
-                        docRef2.get()
-                            .addOnSuccessListener { anjer2 ->
-                                for (anjers2 in anjer2){
-                                    val id2 = anjers2.id
-                                    val threadsRef2 = db.collection("thumbs").whereEqualTo("id_threads", id2.toString()).whereEqualTo("id_user", savedName)
-//
+            val docRef2 = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
 
-                                    threadsRef2.get()
-                                        .addOnSuccessListener { documentSnapshot ->
-                                            if (documentSnapshot.isEmpty) {
-                                                val tu = hashMapOf(
-                                                    "id_threads" to id2,
-                                                    "id_user" to savedName,
-                                                    "type" to "up"
-                                                )
-                                                db.collection("thumbs").add(tu)
+            docRef2.get()
+                .addOnSuccessListener { anjer2 ->
+                    for (anjers2 in anjer2) {
+                        val id = anjers2.id
+                        val threadsRef2 =
+                            db.collection("thumbs").whereEqualTo("id_threads", id.toString())
+                                .whereEqualTo("id_user", savedName)
+                        //
 
-                                                val threadsRef = db.collection("threads")
-                                                val docRef = threadsRef.document(id.toString())
+                        threadsRef2.get()
+                            .addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.isEmpty) {
+                                    val tu = hashMapOf(
+                                        "id_threads" to id,
+                                        "id_user" to savedName,
+                                        "type" to "up"
+                                    )
+                                    db.collection("thumbs").add(tu)
 
-                                                docRef.get()
-                                                    .addOnSuccessListener { documentSnapshot4 ->
-                                                        val like = documentSnapshot4.getLong("like")
-                                                        docRef.update("like", like!! + 1)
-                                                            .addOnSuccessListener {
-                                                                // Update berhasil
-                                                                holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                                holder._totLike.text = (like + 1).toString()
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Update gagal
-                                                            }
-                                                    }
-                                                    .addOnFailureListener { exception ->
-                                                        // Gagal ambil data
-                                                    }
+                                    val threadsRef = db.collection("threads")
+                                    val docRef = threadsRef.document(id.toString())
 
-                                            } else {
-                                                // Iterate through the documents in the snapshot
-                                                for (document in documentSnapshot) {
-                                                    val type = document.getString("type")
-                                                    val idThumbs = document.id
-
-                                                    if (type == "up"){
-                                                        val threadsRef3 = db.collection("threads")
-                                                        val docRef3 = threadsRef3.document(id.toString())
-
-                                                        docRef3.get()
-                                                            .addOnSuccessListener { documentSnapshot2 ->
-                                                                val like = documentSnapshot2.getLong("like")
-                                                                docRef3.update("like", like!! - 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
-                                                                        holder._totLike.text = (like - 1).toString()
-
-                                                                        db.collection("thumbs").document(idThumbs).delete()
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Gagal ambil data
-                                                            }
-//                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                    } else if( type == "down"){
-                                                        val threadsRef3 = db.collection("threads")
-                                                        val docRef3 = threadsRef3.document(id.toString())
-
-                                                        docRef3.get()
-                                                            .addOnSuccessListener { documentSnapshot2 ->
-                                                                val dislike = documentSnapshot2.getLong("dislike")
-                                                                val like = documentSnapshot2.getLong("like")
-
-                                                                docRef3.update("dislike", dislike!! - 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24_nonact)
-                                                                        holder._totDis.text = (dislike - 1).toString()
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-                                                                docRef3.update("like", like!! + 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                                        holder._totLike.text = (like + 1).toString()
-                                                                        db.collection("thumbs").document(idThumbs).update("type", "up")
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-
-
-
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Gagal ambil data
-                                                            }
-                                                    }
-                                                    // do something with the type
+                                    docRef.get()
+                                        .addOnSuccessListener { documentSnapshot4 ->
+                                            val like = documentSnapshot4.getLong("like")
+                                            docRef.update("like", like!! + 1)
+                                                .addOnSuccessListener {
+                                                    // Update berhasil
+                                                    holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                                                    holder._totLike.text = (like + 1).toString()
                                                 }
-                                            }
+                                                .addOnFailureListener { exception ->
+                                                    // Update gagal
+                                                }
                                         }
                                         .addOnFailureListener { exception ->
                                             // Gagal ambil data
                                         }
+
+                                } else {
+                                    // Iterate through the documents in the snapshot
+                                    for (document in documentSnapshot) {
+                                        val type = document.getString("type")
+                                        val idThumbs = document.id
+
+                                        if (type == "up") {
+                                            val threadsRef3 = db.collection("threads")
+                                            val docRef3 = threadsRef3.document(id.toString())
+
+                                            docRef3.get()
+                                                .addOnSuccessListener { documentSnapshot2 ->
+                                                    val like = documentSnapshot2.getLong("like")
+                                                    docRef3.update("like", like!! - 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
+                                                            holder._totLike.text =
+                                                                (like - 1).toString()
+
+                                                            db.collection("thumbs")
+                                                                .document(idThumbs).delete()
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    // Gagal ambil data
+                                                }
+                                            //                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                                        } else if (type == "down") {
+                                            val threadsRef3 = db.collection("threads")
+                                            val docRef3 = threadsRef3.document(id.toString())
+
+                                            docRef3.get()
+                                                .addOnSuccessListener { documentSnapshot2 ->
+                                                    val dislike =
+                                                        documentSnapshot2.getLong("dislike")
+                                                    val like = documentSnapshot2.getLong("like")
+
+                                                    docRef3.update("dislike", dislike!! - 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsDown.setImageResource(
+                                                                R.drawable.ic_baseline_thumb_down_24_nonact
+                                                            )
+                                                            holder._totDis.text =
+                                                                (dislike - 1).toString()
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+                                                    docRef3.update("like", like!! + 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                                                            holder._totLike.text =
+                                                                (like + 1).toString()
+                                                            db.collection("thumbs")
+                                                                .document(idThumbs)
+                                                                .update("type", "up")
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+
+
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    // Gagal ambil data
+                                                }
+                                        }
+                                        // do something with the type
+                                    }
                                 }
+                            }
+                            .addOnFailureListener { exception ->
+                                // Gagal ambil data
                             }
                     }
                 }
+
         }
 
         holder._totalThumbsDown.setOnClickListener {
 
-            val colRef = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
-            colRef.get()
-                .addOnSuccessListener { anjer ->
-                    for (anjers in anjer){
-                        val id = anjers.id
-                        val docRef2 = db.collection("threads").whereEqualTo("judul", thread.judul).whereEqualTo("isi",thread.isi).whereEqualTo("date", thread.date)
+            val docRef22 = db.collection("threads").whereEqualTo("judul", thread.judul)
+                .whereEqualTo("isi", thread.isi).whereEqualTo("date", thread.date)
 
-                        docRef2.get()
-                            .addOnSuccessListener { anjer2 ->
-                                for (anjers2 in anjer2){
-                                    val id2 = anjers2.id
-                                    val threadsRef2 = db.collection("thumbs").whereEqualTo("id_threads", id2.toString()).whereEqualTo("id_user", savedName)
+            docRef22.get()
+                .addOnSuccessListener { anjer2 ->
+                    for (anjers2 in anjer2) {
+                        val id = anjers2.id
+                        val threadsRef2 =
+                            db.collection("thumbs").whereEqualTo("id_threads", id.toString())
+                                .whereEqualTo("id_user", savedName)
 
-                                    threadsRef2.get()
-                                        .addOnSuccessListener { documentSnapshot ->
-                                            if (documentSnapshot.isEmpty) {
-                                                val tu = hashMapOf(
-                                                    "id_threads" to id2,
-                                                    "id_user" to savedName,
-                                                    "type" to "down"
-                                                )
-                                                db.collection("thumbs").add(tu)
+                        threadsRef2.get()
+                            .addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.isEmpty) {
+                                    val tu = hashMapOf(
+                                        "id_threads" to id,
+                                        "id_user" to savedName,
+                                        "type" to "down"
+                                    )
+                                    db.collection("thumbs").add(tu)
 
-                                                val threadsRef = db.collection("threads")
-                                                val docRef = threadsRef.document(id.toString())
+                                    val threadsRef = db.collection("threads")
+                                    val docRef = threadsRef.document(id.toString())
 
-                                                docRef.get()
-                                                    .addOnSuccessListener { documentSnapshot4 ->
-                                                        val dislike = documentSnapshot4.getLong("dislike")
-                                                        docRef.update("dislike", dislike!! + 1)
-                                                            .addOnSuccessListener {
-                                                                // Update berhasil
-                                                                holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-                                                                holder._totDis.text = (dislike + 1).toString()
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Update gagal
-                                                            }
-                                                    }
-                                                    .addOnFailureListener { exception ->
-                                                        // Gagal ambil data
-                                                    }
-
-                                            } else {
-                                                // Iterate through the documents in the snapshot
-                                                for (document in documentSnapshot) {
-                                                    val type = document.getString("type")
-                                                    val idThumbs1 = document.id
-
-
-                                                    if (type == "up"){
-                                                        val threadsRef3 = db.collection("threads")
-                                                        val docRef3 = threadsRef3.document(id.toString())
-
-                                                        docRef3.get()
-                                                            .addOnSuccessListener { documentSnapshot2 ->
-                                                                val dislike = documentSnapshot2.getLong("dislike")
-                                                                val like = documentSnapshot2.getLong("like")
-
-                                                                docRef3.update("like", like!! - 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
-                                                                        holder._totLike.text = (like - 1).toString()
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-                                                                docRef3.update("dislike", dislike!! + 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-                                                                        holder._totDis.text = (dislike + 1).toString()
-                                                                        db.collection("thumbs").document(idThumbs1).update("type", "down")
-
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Gagal ambil data
-                                                            }
-
-
-//                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-                                                    } else if( type == "down"){
-                                                        val threadsRef3 = db.collection("threads")
-                                                        val docRef3 = threadsRef3.document(id.toString())
-
-                                                        docRef3.get()
-                                                            .addOnSuccessListener { documentSnapshot2 ->
-                                                                val dislike = documentSnapshot2.getLong("dislike")
-                                                                docRef3.update("dislike", dislike!! - 1)
-                                                                    .addOnSuccessListener {
-                                                                        // Update berhasil
-                                                                        holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24_nonact)
-                                                                        holder._totDis.text = (dislike - 1).toString()
-                                                                        db.collection("thumbs").document(idThumbs1).delete()
-                                                                    }
-                                                                    .addOnFailureListener { exception ->
-                                                                        // Update gagal
-                                                                    }
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                // Gagal ambil data
-                                                            }
-                                                    }
-                                                    // do something with the type
+                                    docRef.get()
+                                        .addOnSuccessListener { documentSnapshot4 ->
+                                            val dislike = documentSnapshot4.getLong("dislike")
+                                            docRef.update("dislike", dislike!! + 1)
+                                                .addOnSuccessListener {
+                                                    // Update berhasil
+                                                    holder._totalThumbsDown.setImageResource(R.drawable.ic_baseline_thumb_down_24)
+                                                    holder._totDis.text = (dislike + 1).toString()
                                                 }
-                                            }
+                                                .addOnFailureListener { exception ->
+                                                    // Update gagal
+                                                }
                                         }
                                         .addOnFailureListener { exception ->
                                             // Gagal ambil data
                                         }
+
+                                } else {
+                                    // Iterate through the documents in the snapshot
+                                    for (document in documentSnapshot) {
+                                        val type = document.getString("type")
+                                        val idThumbs1 = document.id
+
+
+                                        if (type == "up") {
+                                            val threadsRef3 = db.collection("threads")
+                                            val docRef3 = threadsRef3.document(id.toString())
+
+                                            docRef3.get()
+                                                .addOnSuccessListener { documentSnapshot2 ->
+                                                    val dislike =
+                                                        documentSnapshot2.getLong("dislike")
+                                                    val like = documentSnapshot2.getLong("like")
+
+                                                    docRef3.update("like", like!! - 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24_nonact)
+                                                            holder._totLike.text =
+                                                                (like - 1).toString()
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+                                                    docRef3.update("dislike", dislike!! + 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsDown.setImageResource(
+                                                                R.drawable.ic_baseline_thumb_down_24
+                                                            )
+                                                            holder._totDis.text =
+                                                                (dislike + 1).toString()
+                                                            db.collection("thumbs")
+                                                                .document(idThumbs1)
+                                                                .update("type", "down")
+
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    // Gagal ambil data
+                                                }
+
+
+//                                                        holder._totalThumbsUp.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+                                        } else if (type == "down") {
+                                            val threadsRef3 = db.collection("threads")
+                                            val docRef3 = threadsRef3.document(id.toString())
+
+                                            docRef3.get()
+                                                .addOnSuccessListener { documentSnapshot2 ->
+                                                    val dislike =
+                                                        documentSnapshot2.getLong("dislike")
+                                                    docRef3.update("dislike", dislike!! - 1)
+                                                        .addOnSuccessListener {
+                                                            // Update berhasil
+                                                            holder._totalThumbsDown.setImageResource(
+                                                                R.drawable.ic_baseline_thumb_down_24_nonact
+                                                            )
+                                                            holder._totDis.text =
+                                                                (dislike - 1).toString()
+                                                            db.collection("thumbs")
+                                                                .document(idThumbs1).delete()
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            // Update gagal
+                                                        }
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    // Gagal ambil data
+                                                }
+                                        }
+                                        // do something with the type
+                                    }
                                 }
+                            }
+                            .addOnFailureListener { exception ->
+                                // Gagal ambil data
                             }
                     }
                 }

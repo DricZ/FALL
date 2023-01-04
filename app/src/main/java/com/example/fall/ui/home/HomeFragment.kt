@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
 
                     Log.d("CEK DATA HOME", "Data: $dataBundle")
                     val rvThread = view.findViewById<RecyclerView>(R.id.recyclerView)
-                    rvThread.layoutManager = LinearLayoutManager(view.context)
+                    rvThread.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
                     val adapterRV = adapterthread(dataBundle)
                     rvThread.adapter = adapterRV
 
