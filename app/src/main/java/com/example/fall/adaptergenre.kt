@@ -37,6 +37,9 @@ class adaptergenre(private val listGenre: ArrayList<genre>?) : RecyclerView.Adap
         val db = FirebaseFirestore.getInstance()
         var id_genre = ""
         holder._namaGenre.setText(genre.namaGenre)
+
+        Log.d("CEK SIZE ADAPTER", "DATA: $listGenre")
+
         holder._cardGenre.setOnClickListener{
 
             val colGen = db.collection("threads").whereEqualTo("id_genre", genre.namaGenre)

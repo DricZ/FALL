@@ -70,6 +70,8 @@ class NewThreadFragment : Fragment() {
                 // Handle error
             }
 
+        Log.d("CEK SPINNER V", "SV: $spinnerValues")
+
         val adapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, spinnerValues)
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -87,9 +89,12 @@ class NewThreadFragment : Fragment() {
         // Buat listener untuk menangkap item yang dipilih di spinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                val t = parent.getItemAtPosition(position)
+                Log.d("CEK SPIN PILIH", "SELCT: $t")
                 // Ambil value yang dipilih dari spinner
                 if (parent.getItemAtPosition(position) as String == "New"){
                     _newGen.visibility = View.VISIBLE
+                    genre =""
                     Log.d("CEK SPIN1", "true")
                 }
                 else if (parent.getItemAtPosition(position) as String == hint){
@@ -100,6 +105,7 @@ class NewThreadFragment : Fragment() {
                     genre = parent.getItemAtPosition(position) as String
                     Log.d("CEK SPIN2", "true")
                 }
+                Log.d("CEK SPIN GENRE", "SELCT: $genre")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -111,6 +117,7 @@ class NewThreadFragment : Fragment() {
 
 
         btnPost.setOnClickListener{
+            genre = _newGen.text.toString()
             if (etTilte.text.isEmpty()) {
                 Toast.makeText(view.context, "Judul tidak boleh kosong!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -136,7 +143,7 @@ class NewThreadFragment : Fragment() {
                     .addOnSuccessListener { documents ->
                         if (documents.isEmpty) {
                             cek = true
-                            genre = _newGen.text.toString()
+
                             fGen["name"] = genre
                             db.collection("genre").add(fGen)
                         } else {

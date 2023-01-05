@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/fall_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FALL"
-        tools:targetApi="31">
+        tools:targetApi="32">
         <activity
             android:name=".PopulerActivity"
             android:exported="false">

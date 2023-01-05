@@ -19,7 +19,7 @@ class PopulerActivity : AppCompatActivity() {
 
         // AMBIL DATA ARRAY LIST DARI DB DAN MASUKKAN KE RECYCLE VIEW
         val db = FirebaseFirestore.getInstance()
-        val threadsRef = db.collection("threads").orderBy("date", Query.Direction.DESCENDING).orderBy("like", Query.Direction.DESCENDING)
+        val threadsRef = db.collection("threads").orderBy("like", Query.Direction.DESCENDING)
         var dataBundle = ArrayList<thread>()
 //
         threadsRef.get()

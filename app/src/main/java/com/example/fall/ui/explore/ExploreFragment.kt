@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fall.*
 import com.example.fall.databinding.FragmentExploreBinding
@@ -79,7 +81,7 @@ class ExploreFragment : Fragment() {
 
         //AMBIL DATA GENRE LIST
         // Tentukan referensi collection yang akan digunakan
-        val colRef = db.collection("genre")
+        val colRef = db.collection("genre").orderBy("name", Query.Direction.ASCENDING)
         var arrGen = arrayListOf<genre>()
         var dataBundle = ArrayList<thread>()
 
@@ -95,11 +97,12 @@ class ExploreFragment : Fragment() {
                     val nt = genre(name1.toString())
 
                     arrGen.add(nt)
-                    Log.d("Array Gen", "Data: $arrGen")
+
 
 
                 }
-                rvGenre.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, true)
+                Log.d("Array Gen", "Data: $arrGen")
+                rvGenre.layoutManager = GridLayoutManager(view.context, arrGen.size)
                 val adapterRVGen = adaptergenre(arrGen)
                 rvGenre.adapter = adapterRVGen
 
