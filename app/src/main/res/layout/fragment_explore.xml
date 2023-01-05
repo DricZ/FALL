@@ -8,6 +8,22 @@
     android:id="@+id/fExplore"
     tools:context=".ui.explore.ExploreFragment">
 
+    <Button
+        android:id="@+id/buttonPopulerPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Populer Page"
+        android:backgroundTint="@color/button"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
@@ -15,7 +31,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/buttonPopulerPage">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,7 +42,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewGenre"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                />
         </LinearLayout>
     </HorizontalScrollView>
 

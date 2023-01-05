@@ -1,10 +1,12 @@
 package com.example.fall.ui.explore
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,12 +66,16 @@ class ExploreFragment : Fragment() {
 
         val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
         val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
+        val btnPop = view.findViewById<Button>(R.id.buttonPopulerPage)
         val db = FirebaseFirestore.getInstance()
 
 //        val bundle = arguments?.getString("POS")
 //        if (bundle != null) {
 //            Log.d("HASIL", bundle)
 //        }
+        btnPop.setOnClickListener {
+            startActivity(Intent(view.context, PopulerActivity::class.java))
+        }
 
         //AMBIL DATA GENRE LIST
         // Tentukan referensi collection yang akan digunakan
