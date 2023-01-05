@@ -69,6 +69,7 @@ class ExploreFragment : Fragment() {
         val _loading = view.findViewById<LottieAnimationView>(R.id.loading_animationExp)
         val rvGenre = view.findViewById<RecyclerView>(R.id.recyclerViewGenre)
         val btnPop = view.findViewById<Button>(R.id.buttonPopulerPage)
+        val btnDis = view.findViewById<Button>(R.id.buttonDislikedP)
         val db = FirebaseFirestore.getInstance()
 
 //        val bundle = arguments?.getString("POS")
@@ -77,6 +78,10 @@ class ExploreFragment : Fragment() {
 //        }
         btnPop.setOnClickListener {
             startActivity(Intent(view.context, PopulerActivity::class.java))
+        }
+
+        btnDis.setOnClickListener {
+            startActivity(Intent(view.context, dislikedPage::class.java))
         }
 
         //AMBIL DATA GENRE LIST

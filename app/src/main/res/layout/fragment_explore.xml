@@ -13,8 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="Populer Page"
+        android:text="Most Liked Threads"
         android:backgroundTint="@color/button"
         android:textColor="@color/white"
         android:textSize="12sp"
@@ -24,14 +23,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/buttonDislikedP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/button"
+        android:text="Most Disliked Threads"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPopulerPage" />
+
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPopulerPage">
+        app:layout_constraintTop_toBottomOf="@+id/buttonDislikedP">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,10 +52,10 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="24dp"
                 android:id="@+id/recyclerViewGenre"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </HorizontalScrollView>
 
